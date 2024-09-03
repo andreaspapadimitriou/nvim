@@ -1,17 +1,28 @@
 local M = {
-  "nvim-treesitter/nvim-treesitter",
-  build = function()
-    require("nvim-treesitter.install").update({ with_sync = true })()
-  end,
-  config = function()
-    local configs = require("nvim-treesitter.configs")
-    configs.setup({
-      ensure_installed = { "c",
-        "lua", "cmake", "vim", "vimdoc", "cpp", "python", "yaml", "xml", "html" },
-      sync_install = false,
-      highlight = { enable = true },
-      indent = { enable = true },
-    })
-  end,
+	"nvim-treesitter/nvim-treesitter",
+	build = function()
+		require("nvim-treesitter.install").update({ with_sync = true })()
+	end,
+	config = function()
+		local configs = require("nvim-treesitter.configs")
+		configs.setup({
+			ensure_installed = {
+				"c",
+				"lua",
+				"cmake",
+				"vim",
+				"vimdoc",
+				"cpp",
+				"python",
+				"yaml",
+				"xml",
+				"html",
+                "query",
+			},
+			sync_install = false,
+			highlight = { enable = true },
+			indent = { enable = true },
+		})
+	end,
 }
 return M
