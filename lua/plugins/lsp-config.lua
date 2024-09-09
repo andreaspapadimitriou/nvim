@@ -23,6 +23,13 @@ return {
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
       vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+
+    local wk = require("which-key")
+            wk.add({
+                {"gd",vim.lsp.buf.definition, desc = "Go to definition", mode = "n"},
+                {"K",vim.lsp.buf.hover, desc = "Hover", mode = "n"},
+                {"<leader>ca",vim.lsp.buf.code_action, desc = "Code action", mode = "n"},
+                })
     end,
   },
 }
