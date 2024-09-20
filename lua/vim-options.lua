@@ -10,7 +10,28 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
-vim.opt.wrap = false
+local toggle_word_wrap = function()
+    if vim.wo.wrap then
+        -- Disable wrap
+        vim.opt.wrap = false
+        print("Word wrap disabled")
+    else
+        -- Enable wrap and set custom j/k mappings
+        vim.opt.wrap = true
+        vim.keymap.set("n", "j", function()
+            return vim.v.count > 0 and "j" or "gj"
+        end, { expr = true, desc = "Move down respecting wrapped lines" })
+
+        vim.keymap.set("n", "k", function()
+            return vim.v.count > 0 and "k" or "gk"
+        end, { expr = true, desc = "Move up respecting wrapped lines" })
+
+        print("Word wrap enabled")
+    end
+end
+
+-- Bind the toggle to a key, e.g., <leader>w
+vim.keymap.set("n", "<leader>w", toggle_word_wrap, { desc = "Toggle Word Wrap" })
 
 vim.opt.swapfile = false
 vim.opt.backup = false
