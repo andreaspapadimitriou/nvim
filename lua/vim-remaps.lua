@@ -35,13 +35,20 @@ vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+vim.keymap.set("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("v", "<leader>sr", [[:s/\%V<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>]])
 
-vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+--vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+
+--vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+
+--vim.keymap.set("n", "<leader><leader>", function()
+--	vim.cmd("so")
+--end)
 
 vim.keymap.set("n", "<leader><leader>", function()
-	vim.cmd("so")
+    vim.api.nvim_command("source ~/.config/nvim/init.lua")
+    vim.api.nvim_command("source ~/.config/nvim/lua/vim-remaps.lua")
 end)
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -77,23 +84,33 @@ vim.keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Assuming you are using nvim-lspconfig and clangd is attached
-local opts = { noremap = true, silent = true }
+--local opts = { noremap = true, silent = true }
 
 -- Mapping to switch between source and header files
-vim.keymap.set("n", "<leader>sh", function()
-	local params = { uri = vim.uri_from_bufnr(0) }
-	vim.lsp.buf_request(0, "textDocument/switchSourceHeader", params, function(err, result)
-		if err then
-			vim.notify("Error switching between source and header: " .. err.message, vim.log.levels.ERROR)
-			return
-		end
-		if not result then
-			vim.notify("No corresponding source/header file found", vim.log.levels.WARN)
-			return
-		end
-		vim.api.nvim_command("edit " .. vim.uri_to_fname(result))
-	end)
-end, opts)
+--vim.keymap.set("n", "<F4>", function()
+--	local params = { uri = vim.uri_from_bufnr(0) }
+--	vim.lsp.buf_request(0, "textDocument/switchSourceHeader", params, function(err, result)
+--		if err then
+--			vim.notify("Error switching between source and header: " .. err.message, vim.log.levels.ERROR)
+--			return
+--		end
+--		if not result then
+--			vim.notify("No corresponding source/header file found", vim.log.levels.WARN)
+--		return
+--		end
+--		vim.api.nvim_command("edit " .. vim.uri_to_fname(result))
+--	end)
+--end, opts)
+
+-- Remap Ctrl+V to paste in normal mode
+vim.api.nvim_set_keymap('n', '<C-v>', '"+p', { noremap = true, silent = true })
+
+-- Remap Ctrl+Shift+V to paste in insert mode
+vim.api.nvim_set_keymap('i', '<C-S-v>', '<C-r>+', { noremap = true, silent = true })
+
+-- Use Ctrl+Q for visual block mode
+vim.api.nvim_set_keymap('n', '<C-q>', '<C-v>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-q>', '<C-v>', { noremap = true, silent = true })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -131,4 +148,26 @@ local toggle_word_wrap = function()
 end
 -- Bind the toggle to a key, e.g., <leader>w
 vim.keymap.set("n", "<leader>w", toggle_word_wrap, { desc = "Toggle Word Wrap" })
+
+
+-- Function to notify when macro recording starts
+local function notify_macro_start()
+  local reg = vim.fn.getcharstr()
+  vim.notify("Recording macro in register " .. reg, vim.log.levels.INFO)
+end
+
+-- Function to notify when macro recording stops
+local function notify_macro_stop()
+  vim.notify("Stopped recording macro", vim.log.levels.INFO)
+end
+
+-- Autocommand to notify when macro recording starts
+vim.api.nvim_create_autocmd("RecordingEnter", {
+  callback = notify_macro_start,
+})
+
+-- Autocommand to notify when macro recording stops
+vim.api.nvim_create_autocmd("RecordingLeave", {
+  callback = notify_macro_stop,
+})
 

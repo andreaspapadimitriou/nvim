@@ -1,19 +1,103 @@
+local toggleTerminal = function(direction)
+    return function()
+        local term_number = vim.v.count
+
+        return "<cmd>" .. tostring(term_number) .. "ToggleTerm direction=" .. direction .. "<cr>"
+    end
+end
+
+local termExec = function()
+    return function()
+        local term_number = vim.v.count
+        return ":" .. tostring(term_number) .. 'TermExec cmd=""'
+    end
+
+end
+
 return {
-    "akinsho/toggleterm.nvim",
-    config = function()
-        require("toggleterm").setup({
-            size = 15,
-            open_mapping = [[<M-t>]],
-            hide_numbers = true,
-            shade_filetypes = {},
-            shade_terminals = true,
-            shading_factor = "1", -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+
+    {
+        "akinsho/toggleterm.nvim",
+
+        event = "BufEnter",
+        keys = {
+            {
+                "<f9>",
+                termExec(),
+                desc = "Terminal execute",
+                mode = { "n", "t" },
+                expr = true,
+            },
+            {
+                "<f6>",
+                toggleTerminal("vertical"),
+                desc = "Toggle vertical",
+                mode = { "n", "t" },
+                expr = true,
+
+            },
+            {
+                "<f7>",
+                toggleTerminal("float"),
+                desc = "Toggle float",
+                mode = { "n", "t" },
+                expr = true,
+            },
+        },
+        opts = {
+            size = function(term)
+                if term.direction == "horizontal" then
+                    local integral, _ = math.modf(math.min(vim.o.lines * 0.33, 40))
+                    return integral
+
+                elseif term.direction == "vertical" then
+                    local integral, _ = math.modf(math.min(vim.o.columns * 0.50, 100))
+                    return integral
+                end
+
+                return 0
+            end,
+            on_create = function(terminal)
+                terminal.name = terminal.count
+            end,
+            open_mapping = "<f8>",
+            hide_number = true,
+            autochdir = false,
+
+            shade_terminals = false,
+
             start_in_insert = true,
-            insert_mappings = true, -- whether or not the open mapping applies in insert mode
-            persist_size = true,
-            direction = "float",
-            close_on_exit = true, -- close the terminal window when the process exits
-            shell = vim.o.shell, -- change the default shell
-        })
-    end,
+
+            terminal_mappings = true,
+            -- persist_size = true,
+
+            persist_mode = true,
+            direction = "vertical", --| "horizontal" | "tab" | "float",
+            close_on_exit = false,
+            shell = vim.o.shell,
+            auto_scroll = true,
+            float_opts = {
+                border = "curved",
+                width = function()
+                    local integral, _ = math.modf(math.min(vim.o.columns * 0.50, 100))
+                    return integral
+
+                end,
+                height = function()
+                    local integral, _ = math.modf(math.min(vim.o.lines * 0.33, 60))
+                    return integral
+                end,
+
+                winblend = 0,
+
+            },
+            winbar = {
+                enabled = false,
+                name_formatter = function(term) --  term: Terminal
+                    return term.name
+
+                end,
+            },
+        },
+    },
 }

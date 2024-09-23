@@ -4,7 +4,7 @@ return {
 	config = function()
 		require("zen-mode").setup({
 			window = {
-				width = 90,
+				width = 180,
 				options = {
 					number = false,
 					relativenumber = false,
