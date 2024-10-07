@@ -27,10 +27,12 @@ return {
          lspconfig.lua_ls.setup({ capabilities = capabilities })
          lspconfig.ruff.setup({ capabilities = capabilities })
          lspconfig.lemminx.setup({ capabilities = capabilities })
+--local paths = require('paths')
+--print("Query Driver: " .. paths.query_driver)
         lspconfig.clangd.setup({
             capabilities = capabilities,
             cmd = { "clangd",
---               "--query-driver=" .. paths.query_driver,
+               --"--query-driver=" .. paths.query_driver,
                "--background-index=true",
                "--clang-tidy",
                "--completion-style=detailed",

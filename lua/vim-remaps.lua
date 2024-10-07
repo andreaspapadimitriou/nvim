@@ -171,3 +171,4 @@ vim.api.nvim_create_autocmd("RecordingLeave", {
   callback = notify_macro_stop,
 })
 
+
