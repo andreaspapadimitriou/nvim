@@ -229,7 +229,7 @@ return {
                 ["--prompt"] = "▌ ",
             },
             {
-                "fzf-native",
+--                "fzf-native",
                 "telescope",
             },
             fzf_colors = {

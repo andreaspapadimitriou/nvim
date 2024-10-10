@@ -38,6 +38,12 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("v", "<leader>sr", [[:s/\%V<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>]])
 
+-- Indent selected lines to the right in Visual mode
+vim.keymap.set("v", "<Tab>", ">gv", { noremap = true, silent = true })
+
+-- Indent selected lines to the left in Visual mode
+vim.keymap.set("v", "<S-Tab>", "<gv", { noremap = true, silent = true })
+
 --vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 --vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
@@ -170,5 +176,3 @@ vim.api.nvim_create_autocmd("RecordingEnter", {
 vim.api.nvim_create_autocmd("RecordingLeave", {
   callback = notify_macro_stop,
 })
-
-

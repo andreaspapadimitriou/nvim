@@ -21,6 +21,8 @@ require("lazy").setup({
     require("plugins.trouble"),
     require("plugins.ui"),
     require("plugins.undotree"),
+    require("plugins.flash"),
+    require("plugins.comment"),
     require("plugins.which_key"),
     require("plugins.zen"),
 }, {
