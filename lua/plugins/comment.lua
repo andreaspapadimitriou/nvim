@@ -3,11 +3,8 @@ return {
     'JoosepAlviste/nvim-ts-context-commentstring',
     event = 'BufRead',
     config = function()
-      require('nvim-treesitter.configs').setup {
-        context_commentstring = {
-          enable = true
-        }
-      }
+      vim.g.skip_ts_context_commentstring_module = true
+      require('ts_context_commentstring').setup {}
     end
   },
   {
