@@ -8,33 +8,31 @@ return {
             -- LEADER s
             {
                 "<leader>s",
-
                 "<cmd>FzfLua grep_visual<cr>",
-                desc = "Grep string (root)",
+                desc = "[s]earch word (root)",
                 mode = { "v" },
             },
             {
                 "<leader>s",
-
                 "<cmd>FzfLua grep_cword<cr>",
-                desc = "Grep string (root)",
+                desc = "[s]earch word (root)",
                 mode = { "n" },
             },
             { "<leader>fr",
               "<cmd>FzfLua resume<cr>",
-               desc = "Resume",
+               desc = "[f]ind [r]esume",
                mode = { "v", "n" }
             },
             {
                 "<leader>ft",
                 "<cmd>FzfLua builtin<cr>",
-                desc = "Builtin",
+                desc = "[f]ind builtins",
                 mode = { "v", "n" },
             },
             {
                 "<leader>ff",
                 "<cmd>FzfLua files<cr>",
-                desc = "Files (root)",
+                desc = "[f]ind [f]iles (root)",
                 mode = { "v", "n" },
             },
             {
@@ -46,25 +44,25 @@ return {
             {
                 "<leader>fs",
                 "<cmd>FzfLua live_grep<cr>",
-                desc = "Search (root dir)",
+                desc = "[s]earch (root dir)",
                 mode = { "v", "n" },
             },
             {
                 "<leader>fS",
                 "<cmd>FzfLua live_grep_native<cr>",
-                desc = "Search (faster)",
+                desc = "[S]earch (faster)",
                 mode = { "v", "n" },
             },
             {
                 "<leader>fb",
                 "<cmd>FzfLua buffers<cr>",
-                desc = "buffers",
+                desc = "[f]ind existing [b]uffers",
                 mode = { "v", "n" },
             },
             {
                 "<leader>fB",
                 "<cmd>FzfLua lines<cr>",
-                desc = "Grep in buffers",
+                desc = "Grep [f]ind in [B]uffers",
                 mode = { "v", "n" },
             },
             {
@@ -82,7 +80,7 @@ return {
             {
                 "<leader>fk",
                 "<cmd>FzfLua keymaps<cr>",
-                desc = "Key Maps",
+                desc = "[f]ind [k]eymaps",
                 mode = { "v", "n" },
             },
 
@@ -201,14 +199,19 @@ return {
                 desc = "Goto Workspace Symbol",
                 mode = { "v", "n" },
             },
-
-            -- Marks
             {
-                "<leader>fh",
-                "<cmd>FzfLua marks<cr>",
-                desc = "Marks",
+                '<leader>fh',
+                "<cmd>FzfLua helptags<cr>",
+                desc = '[f]ind [h]elp',
                 mode = { "v", "n" },
             },
+            -- Marks
+            -- {
+            --     "<leader>fh",
+            --     "<cmd>FzfLua marks<cr>",
+            --     desc = "Marks",
+            --     mode = { "v", "n" },
+            -- },
             -- LEADER
             {
                 "<leader>:",
