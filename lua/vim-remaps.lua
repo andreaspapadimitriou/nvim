@@ -8,6 +8,7 @@ vim.keymap.set("n", "J", "mzJ`z")
 -- keep things centered
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
@@ -27,7 +28,7 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+--vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 -- navigate quickfix list and location list
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
@@ -55,6 +56,7 @@ vim.keymap.set("v", "<S-Tab>", "<gv", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader><leader>", function()
     vim.api.nvim_command("source ~/.config/nvim/init.lua")
     vim.api.nvim_command("source ~/.config/nvim/lua/vim-remaps.lua")
+    vim.api.nvim_command("source ~/.config/nvim/lua/vim-options.lua")
 end)
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -158,7 +160,7 @@ vim.keymap.set("n", "<leader>w", toggle_word_wrap, { desc = "Toggle Word Wrap" }
 
 -- Function to notify when macro recording starts
 local function notify_macro_start()
-  local reg = vim.fn.getcharstr()
+  local reg = vim.fn.reg_recording()
   vim.notify("Recording macro in register " .. reg, vim.log.levels.INFO)
 end
 
