@@ -26,6 +26,7 @@ require("lazy").setup({
     require("plugins.comment"),
     require("plugins.which_key"),
     require("plugins.zen"),
+    require("plugins.unception")
 }, {
     ui = {
         -- If you are using a Nerd Font: set icons to an empty table which will use the
