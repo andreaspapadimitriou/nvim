@@ -1,6 +1,7 @@
 return {
     {
         "ibhagwan/fzf-lua",
+        -- cond = OPTIONS.fzf.value,
         cmd = {
             "FzfLua",
         },
@@ -8,31 +9,32 @@ return {
             -- LEADER s
             {
                 "<leader>s",
+
                 "<cmd>FzfLua grep_visual<cr>",
-                desc = "[s]earch word (root)",
+                desc = "Grep string (root)",
                 mode = { "v" },
             },
             {
                 "<leader>s",
+
                 "<cmd>FzfLua grep_cword<cr>",
-                desc = "[s]earch word (root)",
+                desc = "Grep string (root)",
                 mode = { "n" },
             },
             { "<leader>fr",
-              "<cmd>FzfLua resume<cr>",
-               desc = "[f]ind [r]esume",
-               mode = { "v", "n" }
-            },
+                  "<cmd>FzfLua resume<cr>",
+                  desc = "Resume",
+                  mode = { "v", "n" } },
             {
                 "<leader>ft",
                 "<cmd>FzfLua builtin<cr>",
-                desc = "[f]ind builtins",
+                desc = "Builtin",
                 mode = { "v", "n" },
             },
             {
                 "<leader>ff",
                 "<cmd>FzfLua files<cr>",
-                desc = "[f]ind [f]iles (root)",
+                desc = "Files (root)",
                 mode = { "v", "n" },
             },
             {
@@ -44,25 +46,25 @@ return {
             {
                 "<leader>fs",
                 "<cmd>FzfLua live_grep<cr>",
-                desc = "[s]earch (root dir)",
+                desc = "Search (root dir)",
                 mode = { "v", "n" },
             },
             {
                 "<leader>fS",
                 "<cmd>FzfLua live_grep_native<cr>",
-                desc = "[S]earch (faster)",
+                desc = "Search (faster)",
                 mode = { "v", "n" },
             },
             {
                 "<leader>fb",
                 "<cmd>FzfLua buffers<cr>",
-                desc = "[f]ind existing [b]uffers",
+                desc = "buffers",
                 mode = { "v", "n" },
             },
             {
                 "<leader>fB",
                 "<cmd>FzfLua lines<cr>",
-                desc = "Grep [f]ind in [B]uffers",
+                desc = "Grep in buffers",
                 mode = { "v", "n" },
             },
             {
@@ -80,7 +82,7 @@ return {
             {
                 "<leader>fk",
                 "<cmd>FzfLua keymaps<cr>",
-                desc = "[f]ind [k]eymaps",
+                desc = "Key Maps",
                 mode = { "v", "n" },
             },
 
@@ -111,30 +113,30 @@ return {
             },
 
             -- DAP
---            {
---                "<leader>fdc",
---                "<cmd>FzfLua dap_commands<cr>",
---                desc = "Commands",
---                mode = { "v", "n" },
---            },
---            {
---                "<leader>fdb",
---                "<cmd>FzfLua dap_breakpoints<cr>",
---                desc = "Breakpoints",
---                mode = { "v", "n" },
---            },
---            {
---                "<leader>fdv",
---                "<cmd>FzfLua dap_variables<cr>",
---                desc = "Variables",
---                mode = { "v", "n" },
---            },
---            {
---                "<leader>fdx",
---                "<cmd>FzfLua dap_configurations<cr>",
---                desc = "Configurations",
---                mode = { "v", "n" },
---            },
+            {
+                "<leader>fdc",
+                "<cmd>FzfLua dap_commands<cr>",
+                desc = "Commands",
+                mode = { "v", "n" },
+            },
+            {
+                "<leader>fdb",
+                "<cmd>FzfLua dap_breakpoints<cr>",
+                desc = "Breakpoints",
+                mode = { "v", "n" },
+            },
+            {
+                "<leader>fdv",
+                "<cmd>FzfLua dap_variables<cr>",
+                desc = "Variables",
+                mode = { "v", "n" },
+            },
+            {
+                "<leader>fdx",
+                "<cmd>FzfLua dap_configurations<cr>",
+                desc = "Configurations",
+                mode = { "v", "n" },
+            },
 
             -- LSP
             {
@@ -200,23 +202,22 @@ return {
                 mode = { "v", "n" },
             },
             {
-                '<leader>fh',
+                '<leader>fH',
                 "<cmd>FzfLua helptags<cr>",
                 desc = '[f]ind [h]elp',
                 mode = { "v", "n" },
             },
-            -- Marks
-            -- {
-            --     "<leader>fh",
-            --     "<cmd>FzfLua marks<cr>",
-            --     desc = "Marks",
-            --     mode = { "v", "n" },
-            -- },
-            -- LEADER
             {
                 "<leader>:",
                 "<cmd>FzfLua command_history<cr>",
                 desc = "Command History",
+                mode = { "v", "n" },
+            },
+            -- Marks
+            {
+                "<leader>fh",
+                "<cmd>FzfLua marks<cr>",
+                desc = "Marks",
                 mode = { "v", "n" },
             },
         },
@@ -232,7 +233,7 @@ return {
                 ["--prompt"] = "▌ ",
             },
             {
---                "fzf-native",
+                "fzf-native",
                 "telescope",
             },
             fzf_colors = {
