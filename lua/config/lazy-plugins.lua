@@ -19,6 +19,7 @@ require("lazy").setup({
     require("plugins.alpha"),
     require("plugins.toggleterm"),
     require("plugins.treesitter"),
+    require("plugins.grug"),
     require("plugins.trouble"),
     require("plugins.ui"),
     require("plugins.undotree"),
