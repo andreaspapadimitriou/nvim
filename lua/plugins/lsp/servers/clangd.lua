@@ -5,7 +5,7 @@ local number_of_cores = 4
 if _G.external then
   print("External")
 end
-local paths = require('paths')
+--local paths = require('paths')
 --print("Query Driver: " .. paths.query_driver)
 return {
     filetypes = {
@@ -24,8 +24,8 @@ return {
         "--malloc-trim",
         "--all-scopes-completion=true",
 --        "--query-driver=" .. "/opt/sdks/**/*linux-g++",
---        "--query-driver=opt/sdks/rcsos-2.4.0/x86_4.4.50-rt63/sysroots/x86_64-rcssdk-linux/usr/bin/i586-rcs-linux/i586-rcs-linux-g++",
-        "--query-driver=" .. paths.query_driver,
+        "--query-driver=opt/sdks/rcsos-2.4.0/x86_4.4.50-rt63/sysroots/x86_64-rcssdk-linux/usr/bin/i586-rcs-linux/i586-rcs-linux-g++",
+--        "--query-driver=" .. paths.query_driver,
         "--header-insertion=iwyu",
     },
 }
