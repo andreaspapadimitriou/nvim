@@ -14,8 +14,11 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 
--- maintain the copied register when pasting on highlighted word
+-- maintain the copied register when pasting on highlighted word in visual mode
 vim.keymap.set("x", "<leader>p", [["_dP]])
+
+-- replace the word under the cursor in normal mode
+vim.keymap.set("n", "<leader>p", '"_diwP')
 
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
