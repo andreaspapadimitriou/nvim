@@ -66,28 +66,37 @@ return {
             }
         end,
    },
-  {
+   {
     'HiPhish/rainbow-delimiters.nvim',
     config = function()
-      require('rainbow-delimiters').setup ({
-        strategy = {
-          [''] = require('rainbow-delimiters').strategy['global'],
-          vim = require('rainbow-delimiters').strategy['local'],
-        },
-        query = {
-          [''] = 'rainbow-delimiters',
-          lua = 'rainbow-blocks',
-        },
-        highlight = {
-          'RainbowDelimiterRed',
-          'RainbowDelimiterYellow',
-          'RainbowDelimiterBlue',
-          'RainbowDelimiterOrange',
-          'RainbowDelimiterGreen',
-          'RainbowDelimiterViolet',
-          'RainbowDelimiterCyan',
-        },
-      })
+      -- This module contains a number of default definitions
+      local rainbow_delimiters = require 'rainbow-delimiters'
+
+      ---@type rainbow_delimiters.config
+      vim.g.rainbow_delimiters = {
+          strategy = {
+              [''] = rainbow_delimiters.strategy['global'],
+              commonlisp = rainbow_delimiters.strategy['local'],
+          },
+          query = {
+              [''] = 'rainbow-delimiters',
+              lua = 'rainbow-blocks',
+          },
+          priority = {
+              [''] = 110,
+              lua = 210,
+          },
+          highlight = {
+              'RainbowDelimiterRed',
+              'RainbowDelimiterYellow',
+              'RainbowDelimiterBlue',
+              'RainbowDelimiterOrange',
+              'RainbowDelimiterGreen',
+              'RainbowDelimiterViolet',
+              'RainbowDelimiterCyan',
+          },
+        --  blacklist = {'c', 'cpp'}, -- I don't think I will ever need this.
+      }
     end
-  },
+    },
 }
