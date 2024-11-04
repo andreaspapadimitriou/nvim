@@ -26,6 +26,10 @@ require("lazy").setup({
     require("plugins.flash"),
     require("plugins.autopairs"),
     require("plugins.comment"),
+    require("plugins.diffview"),
+--    require("plugins.ufo"),
+    require("plugins.neotest"),
+    require("plugins.adopure"),
     require("plugins.which_key"),
     require("plugins.zen"),
     require("plugins.unception")
