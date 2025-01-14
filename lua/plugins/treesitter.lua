@@ -40,6 +40,7 @@ return {
 				"vimdoc",
 				"json",
 				"yaml",
+        "commonlisp"
 			},
 			auto_install = true, -- Automatically install missing language parsers
 		},

@@ -29,7 +29,7 @@ require("lazy").setup({
     require("plugins.diffview"),
 --    require("plugins.ufo"),
     require("plugins.neotest"),
-    require("plugins.adopure"),
+    -- require("plugins.adopure"),
     require("plugins.which_key"),
     require("plugins.zen"),
     require("plugins.unception")

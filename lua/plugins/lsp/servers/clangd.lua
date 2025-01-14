@@ -19,7 +19,8 @@ return {
         "--completion-style=detailed",
         "--malloc-trim",
         "--all-scopes-completion=true",
-        "--query-driver=" .. "/opt/sdks/**/*linux-g++",
+        -- "--query-driver=" .. "/opt/sdks/**/*linux-g++",
+        "--query-driver=" .. "/usr/bin/g++",
         "--header-insertion=iwyu",
     },
 }
