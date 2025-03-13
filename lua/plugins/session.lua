@@ -80,4 +80,45 @@ return {
             },
         },
     },
+
+    -- {
+    --     "rmagatti/auto-session",
+    --     event = "VeryLazy",
+    --     config = function()
+    --         local map = vim.keymap.set
+    --         local auto_session = require("auto-session")
+    --         auto_session.setup({
+    --             auto_restore_enabled = false,
+    --             auto_save_enabled = true,
+    --         })
+    --         -- keymap
+    --         map("n", "<leader>Ws", ":SessionSave<CR>", { desc = "Sessions Save", noremap = true, silent = true })
+    --         map(
+    --             "n",
+    --             "<leader>sl",
+    --             ":Autosession search<cr>",
+    --             { desc = "Available Sessions", noremap = true, silent = true }
+    --         )
+    --         map("n", "<leader>Wd", ":Autosession delete<cr>", { desc = "Delete Sessions", noremap = true, silent = true })
+    --         map("n", "<leader>Wr", ":SessionRestore ", { desc = "Restore Sessions", noremap = true, silent = true })
+    --         map(
+    --             "n",
+    --             "<leader>Wsa",
+    --             ":SessionToggleAutoSave<CR>",
+    --             { desc = "Toggle Autosave Sessions", noremap = true, silent = true }
+    --         )
+    --         map(
+    --             "n",
+    --             "<leader>WsD",
+    --             ":SessionDisableAutoSave<CR>",
+    --             { desc = "Disable Autosave Sessions", noremap = true, silent = true }
+    --         )
+    --         map(
+    --             "n",
+    --             "<leader>Wsp",
+    --             ":SessionPurgeOrphaned<CR>",
+    --             { desc = "Purge Orphaned Sessions", noremap = true, silent = true }
+    --         )
+    --     end,
+    -- },
 }

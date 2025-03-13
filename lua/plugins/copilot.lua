@@ -56,7 +56,7 @@ return {
     },
     {
         "CopilotC-Nvim/CopilotChat.nvim",
-        branch = "canary",
+        branch = "main",
         init = function()
             vim.api.nvim_create_autocmd("BufEnter", {
                 pattern = "copilot-*",
@@ -141,10 +141,10 @@ return {
                -- show_diff = {
                --     normal = "gd",
                -- },
-                show_system_prompt = {
+               show_context = {
                     normal = "gp",
                 },
-                show_user_selection = {
+                show_context = {
                     normal = "gs",
                 },
             },

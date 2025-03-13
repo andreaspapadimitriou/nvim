@@ -4,7 +4,7 @@ return {
         event = "VeryLazy",
         keys = {
             {
-                "<cr>",
+                "<leader><cr>",
                 mode = { "n", "x", "o" },
                 function()
                     local Flash = require("flash")
@@ -67,6 +67,8 @@ return {
                 exclude = {
                     "cmp_menu",
                     "flash_prompt",
+                    -- "noice",
+                    -- "qf",
                     function(win)
                         return not vim.api.nvim_win_get_config(win).focusable
                     end,

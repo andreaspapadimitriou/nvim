@@ -7,10 +7,9 @@ return {
         },
         opts = {
             preferred_remotes = {
-                "origin",
+                "https://dev.azure.com/EPIROC-AUTOMATION",
             },
         },
-        
         config = function(_, opts)
 
             local azure_token = os.getenv("AZURE_TOKEN")
