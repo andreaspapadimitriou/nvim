@@ -1,7 +1,7 @@
 return {
     {
         "goolord/alpha-nvim",
-        dependencies = { "nvim-telescope/telescope.nvim" },
+        dependencies = { "folke/persistence.nvim" },
         config = function()
             local alpha = require("alpha")
             local dashboard = require("alpha.themes.dashboard")
@@ -104,9 +104,14 @@ return {
                 -- ),
         -- this is just a temp fix to load previous stuff since the project did not work
                 dashboard.button(
-                    "p",
+                    "g",
                     "  > Project",
                     ":SessionSearch<CR>"
+                ),
+                dashboard.button(
+                    "p",
+                    "  > Select Session",
+                    ":lua require('persistence').select()<CR>"
                 ),
                 dashboard.button("c", "  > Configuration", ":e $MYVIMRC <CR>"),
                 dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
