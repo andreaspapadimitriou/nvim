@@ -33,7 +33,8 @@ require("lazy").setup({
     require("plugins.which_key"),
     require("plugins.zen"),
     require("plugins.unception"),
-    require("plugins.conform")
+    require("plugins.conform"),
+    require("plugins.persistence")
 }, {
     ui = {
         -- If you are using a Nerd Font: set icons to an empty table which will use the
