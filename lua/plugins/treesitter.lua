@@ -40,7 +40,8 @@ return {
 				"vimdoc",
 				"json",
 				"yaml",
-        "commonlisp"
+        "commonlisp",
+        "arduino-language-server"
 			},
 			auto_install = true, -- Automatically install missing language parsers
 		},

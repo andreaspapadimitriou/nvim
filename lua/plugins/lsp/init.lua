@@ -1,27 +1,35 @@
 return {
-	{
-		-- Lua LSP configuration for Neovim development
-		"folke/lazydev.nvim",
-		ft = "lua",
-		opts = {
-			library = {
-				"luvit-meta/library",
-			},
-		},
-	},
-	{
-		"williamboman/mason.nvim",
-		cmd = "Mason",
-		--        cond = not vim.g.vscode,
-		opts = {
-			ensure_installed = {
-				-- NOTE: LSP
-				--"basedpyright",
-				"ruff",
-				"clangd",
-				"cmake-language-server",
-				"lua-language-server",
-				"marksman",
+  {
+  'williamboman/mason.nvim',
+  build = ":MasonUpdate",
+  config = function()
+    require("mason").setup()
+  end
+  },
+    {
+        -- Lua LSP configuration for Neovim development
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = {
+                "luvit-meta/library",
+            },
+        },
+    },
+    {
+        "williamboman/mason.nvim",
+        cmd = "Mason",
+--        cond = not vim.g.vscode,
+        opts = {
+            ensure_installed = {
+                -- NOTE: LSP
+                --"basedpyright",
+                "ruff",
+                "clangd",
+                "cmake-language-server",
+                "lua-language-server",
+                "marksman",
+                "arduino-language-server",
 
 				-- NOTE: LINT
 				"buf",
