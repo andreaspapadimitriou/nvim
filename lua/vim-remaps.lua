@@ -139,6 +139,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- toggle word wrap
 local toggle_word_wrap = function()
+    if vim.wo.wrap then
+        -- Disable wrap
+        vim.opt.wrap = false
+        print("Word wrap disabled")
+    else
+        -- Enable wrap and set custom j/k mappings
+        vim.opt.wrap = true
+        vim.keymap.set("n", "j", function()
+            return vim.v.count > 0 and "j" or "gj"
+        end, { expr = true, desc = "Move down respecting wrapped lines" })
+
 	if vim.wo.wrap then
 		-- Disable wrap
 		vim.opt.wrap = false
