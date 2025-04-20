@@ -39,11 +39,11 @@ vim.keymap.set("v", "<leader>sr", [[:s/\%V<C-r><C-w>/<C-r><C-w>/gI<Left><Left><L
 --  See `:help hlsearch`
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
- -- TIP: Disable arrow keys in normal mode
- vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
- vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
- vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
- vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
+-- TIP: Disable arrow keys in normal mode
+vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set("n", "<M-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
@@ -67,31 +67,31 @@ vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 -- Highlight when yanking (copying) text
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+    desc = "Highlight when yanking (copying) text",
+    group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 
 -- Toggle word wrap (@TODO this can be replaced later on)
 local toggle_word_wrap = function()
-	if vim.wo.wrap then
-		-- Disable wrap
-		vim.opt.wrap = false
-		print("Word wrap disabled")
-	else
-		-- Enable wrap and set custom j/k mappings
-		vim.opt.wrap = true
-		vim.keymap.set("n", "j", function()
-			return vim.v.count > 0 and "j" or "gj"
-		end, { expr = true, desc = "Move down respecting wrapped lines" })
+    if vim.wo.wrap then
+        -- Disable wrap
+        vim.opt.wrap = false
+        print("Word wrap disabled")
+    else
+        -- Enable wrap and set custom j/k mappings
+        vim.opt.wrap = true
+        vim.keymap.set("n", "j", function()
+            return vim.v.count > 0 and "j" or "gj"
+        end, { expr = true, desc = "Move down respecting wrapped lines" })
 
-		vim.keymap.set("n", "k", function()
-			return vim.v.count > 0 and "k" or "gk"
-		end, { expr = true, desc = "Move up respecting wrapped lines" })
-		print("Word wrap enabled")
-	end
+        vim.keymap.set("n", "k", function()
+            return vim.v.count > 0 and "k" or "gk"
+        end, { expr = true, desc = "Move up respecting wrapped lines" })
+        print("Word wrap enabled")
+    end
 end
 -- Bind the toggle to a key, e.g., <leader>w
 vim.keymap.set("n", "<leader>w", toggle_word_wrap, { desc = "Toggle Word Wrap" })
