@@ -11,9 +11,11 @@ return {
             },
         },
         config = function(_, opts)
-
             local azure_token = os.getenv("AZURE_TOKEN")
-            assert(azure_token, "No AZURE_TOKEN found in environment variables. Set AZURE_TOKEN to your Azure DevOps Personal Access Token.")
+            assert(
+                azure_token,
+                "No AZURE_TOKEN found in environment variables. Set AZURE_TOKEN to your Azure DevOps Personal Access Token."
+            )
 
             vim.g.adopure = vim.tbl_extend("force", opts, {
                 pat_token = azure_token,

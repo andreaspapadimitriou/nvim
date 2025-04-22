@@ -21,10 +21,12 @@ return {
                 desc = "Grep string (root)",
                 mode = { "n" },
             },
-            { "<leader>fr",
-                  "<cmd>FzfLua resume<cr>",
-                  desc = "Resume",
-                  mode = { "v", "n" } },
+            {
+                "<leader>fr",
+                "<cmd>FzfLua resume<cr>",
+                desc = "Resume",
+                mode = { "v", "n" },
+            },
             {
                 "<leader>ft",
                 "<cmd>FzfLua builtin<cr>",
@@ -202,9 +204,9 @@ return {
                 mode = { "v", "n" },
             },
             {
-                '<leader>fH',
+                "<leader>fH",
                 "<cmd>FzfLua helptags<cr>",
-                desc = '[f]ind [h]elp',
+                desc = "[f]ind [h]elp",
                 mode = { "v", "n" },
             },
             {

@@ -29,5 +29,5 @@ return {
         vim.g.unception_open_highlight_in_new_tab = false
         vim.g.unception_open_highlight_in_new_window = false
         vim.g.unception_open_highlight_in_new_split = false
-    end
+    end,
 }

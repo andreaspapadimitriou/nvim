@@ -50,7 +50,6 @@ return {
                 desc = "CWD",
 
                 mode = "n",
-
             },
             {
                 "<leader>EB",
@@ -78,7 +77,6 @@ return {
                 width_preview = 80,
                 width_focus = 50,
                 width_nofocus = 20,
-
             },
             -- content = {
 

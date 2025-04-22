@@ -20,7 +20,7 @@ return {
             --     dim = 0.18,                        -- dim the color of `message`
             --     cleaning_interval = 1250,          -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
             -- },
-            trigger_events = {                     -- See :h events
+            trigger_events = { -- See :h events
                 immediate_save = { "BufLeave", "FocusLost" }, -- vim events that trigger an immediate save
                 defer_save = { "InsertLeave", "TextChanged" }, -- vim events that trigger a deferred save (saves after `debounce_delay`)
                 cancel_deferred_save = { "InsertEnter" }, -- vim events that cancel a pending deferred save
@@ -47,8 +47,8 @@ return {
         },
         keys = {
             -- Will use Telescope if installed or a vim.ui.select picker otherwise
-            { "<leader>Wr",  "<cmd>SessionSearch<CR>",         desc = "Session search" },
-            { "<leader>Ws",  "<cmd>SessionSave<CR>",           desc = "Save session" },
+            { "<leader>Wr", "<cmd>SessionSearch<CR>", desc = "Session search" },
+            { "<leader>Ws", "<cmd>SessionSave<CR>", desc = "Save session" },
             { "<leader>Was", "<cmd>SessionToggleAutoSave<CR>", desc = "Toggle session autosave" },
         },
 
@@ -56,7 +56,7 @@ return {
         ---@module "auto-session"
         ---@type AutoSession.Config
         opts = {
-            auto_restore =false,
+            auto_restore = false,
             -- ⚠️ This will only work if Telescope.nvim is installed
             -- The following are already the default values, no need to provide them if these are already the settings you want.
             session_lens = {

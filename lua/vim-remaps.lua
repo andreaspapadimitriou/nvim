@@ -57,9 +57,9 @@ vim.keymap.set("v", "<S-Tab>", "<gv", { noremap = true, silent = true })
 --end)
 
 vim.keymap.set("n", "<leader><leader>", function()
-	vim.api.nvim_command("source ~/.config/nvim/init.lua")
-	vim.api.nvim_command("source ~/.config/nvim/lua/vim-remaps.lua")
-	vim.api.nvim_command("source ~/.config/nvim/lua/vim-options.lua")
+    vim.api.nvim_command("source ~/.config/nvim/init.lua")
+    vim.api.nvim_command("source ~/.config/nvim/lua/vim-remaps.lua")
+    vim.api.nvim_command("source ~/.config/nvim/lua/vim-options.lua")
 end)
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -67,7 +67,12 @@ end)
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set(
+    "n",
+    "<leader>q",
+    vim.diagnostic.setloclist,
+    { desc = "Open diagnostic [Q]uickfix list" }
+)
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -130,64 +135,64 @@ vim.api.nvim_set_keymap("v", "<C-q>", "<C-v>", { noremap = true, silent = true }
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+    desc = "Highlight when yanking (copying) text",
+    group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 
--- toggle word wrap
-local toggle_word_wrap = function()
-    if vim.wo.wrap then
-        -- Disable wrap
-        vim.opt.wrap = false
-        print("Word wrap disabled")
-    else
-        -- Enable wrap and set custom j/k mappings
-        vim.opt.wrap = true
-        vim.keymap.set("n", "j", function()
-            return vim.v.count > 0 and "j" or "gj"
-        end, { expr = true, desc = "Move down respecting wrapped lines" })
+-- -- toggle word wrap
+-- local toggle_word_wrap = function()
+--     if vim.wo.wrap then
+--         -- Disable wrap
+--         vim.opt.wrap = false
+--         print("Word wrap disabled")
+--     else
+--         -- Enable wrap and set custom j/k mappings
+--         vim.opt.wrap = true
+--         vim.keymap.set("n", "j", function()
+--             return vim.v.count > 0 and "j" or "gj"
+--         end, { expr = true, desc = "Move down respecting wrapped lines" })
 
-	if vim.wo.wrap then
-		-- Disable wrap
-		vim.opt.wrap = false
-		print("Word wrap disabled")
-	else
-		-- Enable wrap and set custom j/k mappings
-		vim.opt.wrap = true
-		vim.keymap.set("n", "j", function()
-			return vim.v.count > 0 and "j" or "gj"
-		end, { expr = true, desc = "Move down respecting wrapped lines" })
+-- 	if vim.wo.wrap then
+-- 		-- Disable wrap
+-- 		vim.opt.wrap = false
+-- 		print("Word wrap disabled")
+-- 	else
+-- 		-- Enable wrap and set custom j/k mappings
+-- 		vim.opt.wrap = true
+-- 		vim.keymap.set("n", "j", function()
+-- 			return vim.v.count > 0 and "j" or "gj"
+-- 		end, { expr = true, desc = "Move down respecting wrapped lines" })
 
-		vim.keymap.set("n", "k", function()
-			return vim.v.count > 0 and "k" or "gk"
-		end, { expr = true, desc = "Move up respecting wrapped lines" })
+-- 		vim.keymap.set("n", "k", function()
+-- 			return vim.v.count > 0 and "k" or "gk"
+-- 		end, { expr = true, desc = "Move up respecting wrapped lines" })
 
-		print("Word wrap enabled")
-	end
-end
--- Bind the toggle to a key, e.g., <leader>w
-vim.keymap.set("n", "<leader>w", toggle_word_wrap, { desc = "Toggle Word Wrap" })
+-- 		print("Word wrap enabled")
+-- 	end
+-- end
+-- -- Bind the toggle to a key, e.g., <leader>w
+-- vim.keymap.set("n", "<leader>w", toggle_word_wrap, { desc = "Toggle Word Wrap" })
 
 -- Function to notify when macro recording starts
 local function notify_macro_start()
-	local reg = vim.fn.reg_recording()
-	vim.notify("Recording macro in register " .. reg, vim.log.levels.INFO)
+    local reg = vim.fn.reg_recording()
+    vim.notify("Recording macro in register " .. reg, vim.log.levels.INFO)
 end
 
 -- Function to notify when macro recording stops
 local function notify_macro_stop()
-	vim.notify("Stopped recording macro", vim.log.levels.INFO)
+    vim.notify("Stopped recording macro", vim.log.levels.INFO)
 end
 
 -- Autocommand to notify when macro recording starts
 vim.api.nvim_create_autocmd("RecordingEnter", {
-	callback = notify_macro_start,
+    callback = notify_macro_start,
 })
 
 -- Autocommand to notify when macro recording stops
 vim.api.nvim_create_autocmd("RecordingLeave", {
-	callback = notify_macro_stop,
+    callback = notify_macro_stop,
 })

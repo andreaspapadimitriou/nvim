@@ -3,7 +3,7 @@ local icons = require("utils.icons")
 return {
     {
         "nvim-lualine/lualine.nvim",
-        dependencies = {"echasnovski/mini.icons"  },
+        dependencies = { "echasnovski/mini.icons" },
         config = function()
             require("lualine").setup({
                 options = {

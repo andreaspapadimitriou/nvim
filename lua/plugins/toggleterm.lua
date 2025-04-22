@@ -11,7 +11,6 @@ local termExec = function()
         local term_number = vim.v.count
         return ":" .. tostring(term_number) .. 'TermExec cmd=""'
     end
-
 end
 
 return {
@@ -34,7 +33,6 @@ return {
                 desc = "Toggle vertical",
                 mode = { "n", "t" },
                 expr = true,
-
             },
             {
                 "<f7>",
@@ -49,7 +47,6 @@ return {
                 if term.direction == "horizontal" then
                     local integral, _ = math.modf(math.min(vim.o.lines * 0.33, 40))
                     return integral
-
                 elseif term.direction == "vertical" then
                     local integral, _ = math.modf(math.min(vim.o.columns * 0.50, 100))
                     return integral
@@ -81,7 +78,6 @@ return {
                 width = function()
                     local integral, _ = math.modf(math.min(vim.o.columns * 0.50, 100))
                     return integral
-
                 end,
                 height = function()
                     local integral, _ = math.modf(math.min(vim.o.lines * 0.33, 60))
@@ -89,13 +85,11 @@ return {
                 end,
 
                 winblend = 0,
-
             },
             winbar = {
                 enabled = false,
                 name_formatter = function(term) --  term: Terminal
                     return term.name
-
                 end,
             },
         },
