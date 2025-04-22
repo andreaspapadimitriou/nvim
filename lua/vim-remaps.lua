@@ -57,17 +57,17 @@ vim.keymap.set("v", "<S-Tab>", "<gv", { noremap = true, silent = true })
 --end)
 
 vim.keymap.set("n", "<leader><leader>", function()
-    vim.api.nvim_command("source ~/.config/nvim/init.lua")
-    vim.api.nvim_command("source ~/.config/nvim/lua/vim-remaps.lua")
-    vim.api.nvim_command("source ~/.config/nvim/lua/vim-options.lua")
+	vim.api.nvim_command("source ~/.config/nvim/init.lua")
+	vim.api.nvim_command("source ~/.config/nvim/lua/vim-remaps.lua")
+	vim.api.nvim_command("source ~/.config/nvim/lua/vim-options.lua")
 end)
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -75,13 +75,13 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- TIP: Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
 vim.keymap.set("n", "<A-j>", "<C-w>j")
 vim.keymap.set("n", "<A-k>", "<C-w>k")
@@ -89,10 +89,10 @@ vim.keymap.set("n", "<A-h>", "<C-w>h")
 vim.keymap.set("n", "<A-l>", "<C-w>l")
 
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<M-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<M-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set("n", "<M-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<M-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<M-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<M-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 -- Assuming you are using nvim-lspconfig and clangd is attached
 --local opts = { noremap = true, silent = true }
@@ -114,14 +114,14 @@ vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 --end, opts)
 
 -- Remap Ctrl+V to paste in normal mode
-vim.api.nvim_set_keymap('n', '<C-v>', '"+p', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-v>", '"+p', { noremap = true, silent = true })
 
 -- Remap Ctrl+Shift+V to paste in insert mode
-vim.api.nvim_set_keymap('i', '<C-S-v>', '<C-r>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<C-S-v>", "<C-r>+", { noremap = true, silent = true })
 
 -- Use Ctrl+Q for visual block mode
-vim.api.nvim_set_keymap('n', '<C-q>', '<C-v>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<C-q>', '<C-v>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-q>", "<C-v>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<C-q>", "<C-v>", { noremap = true, silent = true })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -129,55 +129,54 @@ vim.api.nvim_set_keymap('v', '<C-q>', '<C-v>', { noremap = true, silent = true }
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
 })
 
 -- toggle word wrap
 local toggle_word_wrap = function()
-    if vim.wo.wrap then
-        -- Disable wrap
-        vim.opt.wrap = false
-        print("Word wrap disabled")
-    else
-        -- Enable wrap and set custom j/k mappings
-        vim.opt.wrap = true
-        vim.keymap.set("n", "j", function()
-            return vim.v.count > 0 and "j" or "gj"
-        end, { expr = true, desc = "Move down respecting wrapped lines" })
+	if vim.wo.wrap then
+		-- Disable wrap
+		vim.opt.wrap = false
+		print("Word wrap disabled")
+	else
+		-- Enable wrap and set custom j/k mappings
+		vim.opt.wrap = true
+		vim.keymap.set("n", "j", function()
+			return vim.v.count > 0 and "j" or "gj"
+		end, { expr = true, desc = "Move down respecting wrapped lines" })
 
-        vim.keymap.set("n", "k", function()
-            return vim.v.count > 0 and "k" or "gk"
-        end, { expr = true, desc = "Move up respecting wrapped lines" })
+		vim.keymap.set("n", "k", function()
+			return vim.v.count > 0 and "k" or "gk"
+		end, { expr = true, desc = "Move up respecting wrapped lines" })
 
-        print("Word wrap enabled")
-    end
+		print("Word wrap enabled")
+	end
 end
 -- Bind the toggle to a key, e.g., <leader>w
 vim.keymap.set("n", "<leader>w", toggle_word_wrap, { desc = "Toggle Word Wrap" })
 
-
 -- Function to notify when macro recording starts
 local function notify_macro_start()
-  local reg = vim.fn.reg_recording()
-  vim.notify("Recording macro in register " .. reg, vim.log.levels.INFO)
+	local reg = vim.fn.reg_recording()
+	vim.notify("Recording macro in register " .. reg, vim.log.levels.INFO)
 end
 
 -- Function to notify when macro recording stops
 local function notify_macro_stop()
-  vim.notify("Stopped recording macro", vim.log.levels.INFO)
+	vim.notify("Stopped recording macro", vim.log.levels.INFO)
 end
 
 -- Autocommand to notify when macro recording starts
 vim.api.nvim_create_autocmd("RecordingEnter", {
-  callback = notify_macro_start,
+	callback = notify_macro_start,
 })
 
 -- Autocommand to notify when macro recording stops
 vim.api.nvim_create_autocmd("RecordingLeave", {
-  callback = notify_macro_stop,
+	callback = notify_macro_stop,
 })
