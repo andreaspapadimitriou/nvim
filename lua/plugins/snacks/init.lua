@@ -1,3 +1,6 @@
+local snacks_path = vim.fn.stdpath("config") .. "/lua/plugins/snacks/snacks/?.lua"
+package.path = package.path .. ";" .. snacks_path
+
 return {
     "folke/snacks.nvim",
     priority = 1000,
@@ -53,64 +56,12 @@ return {
         notifier = { enabled = false }, -- that looks a bit better than the default
         quickfile = { enabled = true },
         scope = { enabled = true },
-        scroll = { enabled = true },
+        scroll = require("scroll")({ enabled = true }),
         statuscolumn = { enabled = false },
         words = { enabled = true },
-        lazygit = {
-            enabled = true,
-            {
-                -- automatically configure lazygit to use the current colorscheme
-                -- and integrate edit with the current neovim instance
-                configure = true,
-                -- extra configuration for lazygit that will be merged with the default
-                -- snacks does NOT have a full yaml parser, so if you need `"test"` to appear with the quotes
-                -- you need to double quote it: `"\"test\""`
-                config = {
-                    os = { editPreset = "nvim-remote" },
-                    gui = {
-                        -- set to an empty string "" to disable icons
-                        nerdFontsVersion = "3",
-                    },
-                },
-                theme = {
-                    [241] = { fg = "Special" },
-                    activeBorderColor = { fg = "MatchParen", bold = true },
-                    cherryPickedCommitBgColor = { fg = "Identifier" },
-                    cherryPickedCommitFgColor = { fg = "Function" },
-                    defaultFgColor = { fg = "Normal" },
-                    inactiveBorderColor = { fg = "FloatBorder" },
-                    optionsTextColor = { fg = "Function" },
-                    searchingActiveBorderColor = { fg = "MatchParen", bold = true },
-                    selectedLineBgColor = { bg = "Visual" }, -- set to `default` to have no background colour
-                    unstagedChangesColor = { fg = "DiagnosticError" },
-                },
-                win = {
-                    style = "lazygit",
-                },
-            },
-        },
+        lazygit = require("lazygit")({ enabled = true }),
     },
-    keys = {
-        {
-            "<leader>un",
-            function()
-                Snacks.notifier.hide()
-            end,
-            desc = "Dismiss All Notifications",
-        },
-        {
-            "<leader>qQ",
-            function()
-                Snacks.bufdelete()
-            end,
-            desc = "Delete Buffer",
-        },
-        {
-            "<leader>gg",
-            function()
-                Snacks.lazygit()
-            end,
-            desc = "Lazygit",
-        },
-    },
+
+    keys = require("plugins.snacks.keymaps.lazygit"),
+    -- more keymaps to be added...
 }
