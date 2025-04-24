@@ -235,12 +235,10 @@ return {
 
                     -- Mappings
                     require("plugins.lsp.keymaps").default(bufnr)
-                    -- The following causes clangd: -32602: trying to get AST for non-added document
-                    -- nvim ~/.local/state/nvim/lsp.log
-                    -- if client.server_capabilities.inlayHintProvider then
-                    --     require("plugins.lsp.keymaps").inlay_hints(bufnr)
-                    --     vim.lsp.inlay_hint.enable(true)
-                    -- end
+                    if client.server_capabilities.inlayHintProvider then
+                        require("plugins.lsp.keymaps").inlay_hints(bufnr)
+                        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    end
 
                     if client.name == "clangd" then
                         require("plugins.lsp.keymaps").clangd(bufnr)
