@@ -10,6 +10,7 @@ return {
         "objc",
         "objcpp",
         "cuda",
+        "ino",
     },
     cmd = {
         "clangd",
@@ -19,8 +20,13 @@ return {
         "--completion-style=detailed",
         "--malloc-trim",
         "--all-scopes-completion=true",
-        "--query-driver=" .. "/opt/sdks/**/*linux-g++",
-        -- "--query-driver=" .. "/usr/bin/g++",
+        --"--query-driver=" .. "/opt/sdks/**/*linux-g++",
+        "--query-driver=" .. "/usr/bin/g++",
+        -- "--extra-arg=-isystem/usr/include/c++/11",
         "--header-insertion=iwyu",
+        "--extra-arg=-I/home/$USER/.arduino15/packages/esp32/hardware/esp32/2.0.7/cores/esp32",
+        "--extra-arg=-I/home/$USER/.arduino15/packages/esp32/hardware/esp32/2.0.7/variants/esp32",
+        "--extra-arg=-DARDUINO=10805",
+        "--extra-arg=-DESP32",
     },
 }

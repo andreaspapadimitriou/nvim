@@ -28,7 +28,7 @@ require("lazy").setup({
     require("plugins.unception"),
     require("plugins.which_key"),
     require("plugins.zen"),
-    require("plugins.snacks.init"),
+    -- require("plugins.snacks.init"),
     require("plugins.render_markdown"),
     -- require("plugins.persistence"),
     --  require("plugins.lsp-config"),

@@ -160,13 +160,11 @@ return {
 
             local lspconfig = require("lspconfig")
 
-            for type, icon in pairs(require("utils.icons").diagnostics) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, {
-                    text = icon,
-                    texthl = hl, --[[numhl = hl]]
-                })
-            end
+            vim.diagnostic.config(vim.tbl_deep_extend("force", opts.diagnostics or {}, {
+                signs = {
+                    text = require("utils.icons").diagnostics,
+                },
+            }))
 
             vim.diagnostic.config(opts.diagnostics)
 
@@ -185,7 +183,9 @@ return {
 
             local function setup(server)
                 local server_opts = vim.tbl_deep_extend("force", {
-                    capabilities = vim.deepcopy(capabilities),
+                    capabilities = vim.tbl_deep_extend("force", vim.deepcopy(capabilities), {
+                        offsetEncoding = { "utf-16" },
+                    }),
                 }, servers[server] or {})
 
                 if opts.setup[server] then
@@ -216,8 +216,10 @@ return {
                 end
             end
 
-            require("mason-lspconfig").setup({ ensure_installed = ensure_installed })
-            require("mason-lspconfig").setup_handlers({ setup })
+            require("mason-lspconfig").setup({
+                ensure_installed = ensure_installed,
+                handlers = { setup },
+            })
 
             -- LspAttach
             vim.api.nvim_create_autocmd("LspAttach", {

@@ -1,25 +1,18 @@
 local home = os.getenv("HOME")
-local fqbn = "arduino:avr:uno"
+local fqbn = "esp32:esp32:esp32" -- Change to your actual board if needed
 local cli_config = home .. "/.arduino15/arduino-cli.yaml"
 
 return {
-    -- cmd = {
-    --   "arduino-language-server",
-    --   "-cli", "/usr/local/bin/arduino-cli",
-    --   "-cli-config", "/home/ap/.arduino15/arduino-cli.yaml",
-    --   "-fqbn", fqbn,
-    --   "-clangd", "/usr/local/bin/clangd"
-    -- },
     cmd = {
         "arduino-language-server",
         "-cli-config",
-        "~/.arduino15/arduino-cli.yaml",
+        cli_config,
         "-cli",
         "arduino-cli",
         "-clangd",
         "clangd",
         "-fqbn",
-        "arduino:avr:uno",
+        fqbn,
     },
     filetypes = { "ino", "cpp", "c", "arduino" },
 }
