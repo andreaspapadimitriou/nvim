@@ -19,7 +19,7 @@ return {
         "-clangd",
         "clangd",
         "-fqbn",
-        "arduino:avr:uno",
+        "esp32:esp32:esp32",
     },
-    filetypes = { "ino", "cpp", "c", "arduino" },
+    filetypes = { "ino", "cpp", "c" },
 }

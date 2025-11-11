@@ -11,16 +11,28 @@ return {
         "objcpp",
         "cuda",
     },
+    -- cmd = {
+    --     "clangd",
+    --     -- "-j=" .. tostring(number_of_cores),
+    --     "--background-index=true",
+    --     "--clang-tidy",
+    --     "--completion-style=detailed",
+    --     "--malloc-trim",
+    --     "--all-scopes-completion=true",
+    --     -- "--query-driver=" .. "/opt/sdks/**/*linux-g++",
+    --     "--query-driver=/home/ap/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
+    --     -- "--query-driver=" .. "/usr/bin/g++",
+    --     "--header-insertion=iwyu",
+    -- },
+
     cmd = {
-        "clangd",
-        -- "-j=" .. tostring(number_of_cores),
+        "/home/ap/.espressif/tools/esp-clang/esp-19.1.2_20250312/esp-clang/bin/clangd", -- Use the same clangd as VSCode
         "--background-index=true",
         "--clang-tidy",
         "--completion-style=detailed",
         "--malloc-trim",
         "--all-scopes-completion=true",
-        "--query-driver=" .. "/opt/sdks/**/*linux-g++",
-        -- "--query-driver=" .. "/usr/bin/g++",
+        "--query-driver=/home/ap/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
         "--header-insertion=iwyu",
     },
 }
