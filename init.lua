@@ -2,6 +2,7 @@ require("vim-options")
 require("vim-remaps")
 require("config.lazy-bootstrap")
 require("config.lazy-plugins")
+require("config.lsp")
 
 vim.api.nvim_create_autocmd("VimLeave", {
     callback = function()

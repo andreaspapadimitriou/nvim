@@ -73,12 +73,8 @@ return {
     {
         "neovim/nvim-lspconfig",
         lazy = true,
-        --        cond = not vim.g.vscode,
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            -- "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-            "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
             "onsails/lspkind.nvim",
             "hrsh7th/cmp-nvim-lsp",
             {
@@ -101,7 +97,6 @@ return {
                     },
                 },
             },
-
             {
                 "p00f/clangd_extensions.nvim",
                 dependencies = {

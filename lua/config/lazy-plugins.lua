@@ -5,6 +5,7 @@ require("lazy").setup({
     require("plugins.catppuccin"),
     require("plugins.comment"),
     require("plugins.completions"),
+    require("plugins.lsp-completions"),
     require("plugins.conform"),
     require("plugins.copilot"),
     require("plugins.diffview"),
@@ -13,7 +14,7 @@ require("lazy").setup({
     require("plugins.gitcrap"),
     require("plugins.grug"),
     -- require("plugins.illuminate"), -- replace by snacks
-    require("plugins.lsp.init"),
+    -- require("plugins.lsp.init"),
     -- require("plugins.lsp_lines"),
     require("plugins.lualine"),
     require("plugins.mini"),
@@ -28,6 +29,8 @@ require("lazy").setup({
     require("plugins.unception"),
     require("plugins.which_key"),
     require("plugins.zen"),
+    require("plugins.clangd_extensions"),
+    -- require("plugins.lsp_extensions"),
     -- require("plugins.snacks.init"),
     require("plugins.render_markdown"),
     -- require("plugins.persistence"),
@@ -37,6 +40,7 @@ require("lazy").setup({
     -- require("plugins.neotest"),
     -- require("plugins.adopure"),
     --    "tpope/vim-sleuth",
+    require("plugins.mason"),
 }, {
     ui = {
         -- If you are using a Nerd Font: set icons to an empty table which will use the

@@ -99,25 +99,6 @@ vim.keymap.set("n", "<M-l>", "<C-w><C-l>", { desc = "Move focus to the right win
 vim.keymap.set("n", "<M-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<M-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
--- Assuming you are using nvim-lspconfig and clangd is attached
---local opts = { noremap = true, silent = true }
-
--- Mapping to switch between source and header files
---vim.keymap.set("n", "<F4>", function()
---	local params = { uri = vim.uri_from_bufnr(0) }
---	vim.lsp.buf_request(0, "textDocument/switchSourceHeader", params, function(err, result)
---		if err then
---			vim.notify("Error switching between source and header: " .. err.message, vim.log.levels.ERROR)
---			return
---		end
---		if not result then
---			vim.notify("No corresponding source/header file found", vim.log.levels.WARN)
---		return
---		end
---		vim.api.nvim_command("edit " .. vim.uri_to_fname(result))
---	end)
---end, opts)
-
 -- Remap Ctrl+V to paste in normal mode
 vim.api.nvim_set_keymap("n", "<C-v>", '"+p', { noremap = true, silent = true })
 
@@ -141,40 +122,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         vim.highlight.on_yank()
     end,
 })
-
--- -- toggle word wrap
--- local toggle_word_wrap = function()
---     if vim.wo.wrap then
---         -- Disable wrap
---         vim.opt.wrap = false
---         print("Word wrap disabled")
---     else
---         -- Enable wrap and set custom j/k mappings
---         vim.opt.wrap = true
---         vim.keymap.set("n", "j", function()
---             return vim.v.count > 0 and "j" or "gj"
---         end, { expr = true, desc = "Move down respecting wrapped lines" })
-
--- 	if vim.wo.wrap then
--- 		-- Disable wrap
--- 		vim.opt.wrap = false
--- 		print("Word wrap disabled")
--- 	else
--- 		-- Enable wrap and set custom j/k mappings
--- 		vim.opt.wrap = true
--- 		vim.keymap.set("n", "j", function()
--- 			return vim.v.count > 0 and "j" or "gj"
--- 		end, { expr = true, desc = "Move down respecting wrapped lines" })
-
--- 		vim.keymap.set("n", "k", function()
--- 			return vim.v.count > 0 and "k" or "gk"
--- 		end, { expr = true, desc = "Move up respecting wrapped lines" })
-
--- 		print("Word wrap enabled")
--- 	end
--- end
--- -- Bind the toggle to a key, e.g., <leader>w
--- vim.keymap.set("n", "<leader>w", toggle_word_wrap, { desc = "Toggle Word Wrap" })
 
 -- Function to notify when macro recording starts
 local function notify_macro_start()
