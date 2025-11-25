@@ -29,7 +29,7 @@ return {
                 "cmake-language-server",
                 "lua-language-server",
                 "marksman",
-                "arduino-language-server",
+                -- "arduino-language-server",
 
                 -- NOTE: LINT
                 "buf",
@@ -76,7 +76,7 @@ return {
         --        cond = not vim.g.vscode,
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+            -- "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             "onsails/lspkind.nvim",
@@ -138,6 +138,9 @@ return {
                 underline = true,
                 update_in_insert = false,
                 severity_sort = true,
+                virtual_lines = vim.fn.has("nvim-0.11") and {
+                    current_line = true,
+                } or false,
                 virtual_text = false,
             },
             -- Automatically format on save

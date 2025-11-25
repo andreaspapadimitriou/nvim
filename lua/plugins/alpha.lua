@@ -103,7 +103,7 @@ return {
                 -- 	":lua require'telescope'.extensions.project.project{display_type = 'full'}<cr>"
                 -- ),
                 -- this is just a temp fix to load previous stuff since the project did not work
-                dashboard.button("p", "  > Project", ":SessionSearch<CR>"),
+                dashboard.button("p", "  > Project", ":AutoSession search<CR>"),
                 -- dashboard.button("p", "  > Select Session", ":lua require('persistence').select()<CR>"),
                 dashboard.button("c", "  > Configuration", ":e $MYVIMRC <CR>"),
                 dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
