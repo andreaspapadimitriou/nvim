@@ -8,7 +8,6 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        cond = not vim.g.vscode,
         build = ":TSUpdate", -- Ensures all installed parsers are up-to-date
         event = { "BufReadPost", "BufNewFile" }, -- Load Treesitter when a buffer is read or created
         opts = {
@@ -36,12 +35,15 @@ return {
                 "json",
                 "yaml",
                 "commonlisp",
-                "query",
+                -- TODO: consider removing if deemed unnecessary
+                -- "query",
             },
             auto_install = true, -- Automatically install missing language parsers
         },
         config = function(_, opts)
-            require("nvim-treesitter.configs").setup(opts)
+            local TS = require("nvim-treesitter.configs")
+            TS.setup(opts)
+            -- require("nvim-treesitter.configs").setup(opts)
         end,
     },
     {
@@ -102,7 +104,6 @@ return {
                     "RainbowDelimiterViolet",
                     "RainbowDelimiterCyan",
                 },
-                --  blacklist = {'c', 'cpp'}, -- I don't think I will ever need this.
             }
         end,
     },

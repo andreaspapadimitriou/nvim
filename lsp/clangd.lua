@@ -56,6 +56,7 @@ return {
         "--completion-style=detailed",
         "--malloc-trim",
         "--all-scopes-completion=true",
+        -- "--query-driver=/home/ap/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
         --"--query-driver=" .. "/opt/sdks/**/*linux-g++",
         "--query-driver=" .. "/usr/bin/g++",
         "--header-insertion=iwyu",
@@ -83,7 +84,8 @@ return {
                 editsNearCursor = true,
             },
         },
-        offsetEncoding = { "utf-8", "utf-16" },
+-- LSP exchanges character offsets. Servers and clients must agree on whether offsets are counted in UTF-8 bytes or UTF-16 code units. Mismatch -> incorrect ranges and diagnostics. Clangd can support both  offsetEncoding = { "utf-8", "utf-16" }, . However I ended up getting some warnings so it is is now set to utf-16 only.
+        offsetEncoding = "utf-16"
     },
     ---@param init_result ClangdInitializeResult
     on_init = function(client, init_result)

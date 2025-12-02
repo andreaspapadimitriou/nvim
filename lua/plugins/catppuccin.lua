@@ -12,6 +12,10 @@ return {
                 dark = "mocha",
             },
             transparent_background = true,
+            float = {
+                transparent = true,
+                solid = false,
+            },
             no_italic = true,
             no_bold = true,
             no_underline = true,
@@ -96,10 +100,14 @@ return {
                         information = { "underline" },
                     },
                     inlay_hints = {
-                        background = true,
+                        background = true, -- false?
                     },
                 },
                 which_key = true,
+                blink_cmp = true,
+                grug_far = true,
+                snacks = true,
+                markview = true,
             },
             custom_highlights = function(c)
                 return {

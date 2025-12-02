@@ -14,6 +14,9 @@ return {
     },
     settings = {
         Lua = {
+            runtime = {
+                version = "LuaJIT",
+            },
             codeLens = { enable = true },
             hint = { enable = true, semicolon = "Disable" },
         },

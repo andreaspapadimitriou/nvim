@@ -236,7 +236,7 @@ return {
             },
             {
                 "fzf-native",
-                "telescope",
+--                "telescope",
             },
             fzf_colors = {
                 ["selected-bg"] = { "bg", "ColorColumn" },

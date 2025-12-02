@@ -1,3 +1,8 @@
+-- This file configures the stevearc/conform.nvim plugin for Neovim.
+-- It sets up automatic and manual code formatting using various formatters per filetype.
+-- Formatting is triggered on save and via the <leader>df keybinding (normal/visual mode).
+-- The configuration includes options for error notifications, format-on-save behavior,
+-- and fallback to LSP formatting if no formatter is available.
 return {
     {
         "stevearc/conform.nvim",

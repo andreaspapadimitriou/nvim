@@ -41,17 +41,13 @@ return function(bufnr)
         { "gD", vim.lsp.buf.declaration, buffer = bufnr, desc = "Go to declaration" },
         { "gd", vim.lsp.buf.definition, buffer = bufnr, desc = "Go to definition" },
         { "gi", vim.lsp.buf.implementation, buffer = bufnr, desc = "Go to implementation" },
-        {
-            "gr",
-            require("fzf-lua").lsp_references,
-            -- require("telescope.builtin").lsp_references({
-            --     -- fname_width = require("utils.sizes").fname_width,
-            --     include_declaration = false,
-            --     include_current_line = true,
-            --     jump_type = "never",
-            -- }),
-            buffer = bufnr,
-            desc = "Go to references",
-        },
+        -- { "gr", require("fzf-lua").lsp_references, buffer = bufnr, desc = "Go to references", },
+        -- require("telescope.builtin").lsp_references({
+        --     -- fname_width = require("utils.sizes").fname_width,
+        --     include_declaration = false,
+        --     include_current_line = true,
+        --     jump_type = "never",
+        -- }),
+        -- { "gr", vim.lsp.buf.references, buffer = bufnr, desc = "Go to references" },
     })
 end
