@@ -43,7 +43,32 @@ return {
         config = function(_, opts)
             local TS = require("nvim-treesitter.configs")
             TS.setup(opts)
-            -- require("nvim-treesitter.configs").setup(opts)
+            
+            -- Custom C++ Treesitter highlight overrides
+            -- These customizations change the colors for specific C++ syntax elements:
+            --   @keyword.type.cpp      - "using namespace" keyword
+            --   @keyword.import.cpp    - "#include" preprocessor directive
+            --   @string.cpp            - Include file paths like <iostream> or "file.h"
+            --   @lsp.type.namespace.cpp - Namespace identifiers (e.g., "std" in "using namespace std")
+            --
+            -- Why we need to break the link first:
+            -- Treesitter highlight groups are linked to base highlight groups (e.g., @keyword.type.cpp -> Keyword).
+            -- Setting { link = "" } breaks this link so our custom colors take precedence.
+            -- Without breaking the link first, the custom colors would be ignored.
+
+            -- TODO: Set the colors to match the Catppuccin theme better
+            
+            -- Step 1: Break the links to base highlight groups
+            vim.api.nvim_set_hl(0, "@keyword.type.cpp", { link = "" })
+            vim.api.nvim_set_hl(0, "@keyword.import.cpp", { link = "" })
+            vim.api.nvim_set_hl(0, "@string.cpp", { link = "" })
+            vim.api.nvim_set_hl(0, "@lsp.type.namespace.cpp", { link = "" })
+            
+            -- Step 2: Apply custom colors
+            vim.api.nvim_set_hl(0, "@keyword.type.cpp", { fg = "#bdf38b", bold = true })
+            vim.api.nvim_set_hl(0, "@keyword.import.cpp", { fg = "#8bf39c", bold = true })
+            vim.api.nvim_set_hl(0, "@string.cpp", { fg = "#1d8cc0" })
+            vim.api.nvim_set_hl(0, "@lsp.type.namespace.cpp", { fg = "#f38ba8", bold = true })
         end,
     },
     {

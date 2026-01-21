@@ -134,10 +134,10 @@ return {
         version = false,
         config = function()
             -- splitjoin
-            require("mini.splitjoin").setup()
+   --         require("mini.splitjoin").setup()
 
             -- visits
-            require("mini.visits").setup()
+           require("mini.visits").setup()
 
             -- icons
             require("mini.icons").setup({
@@ -167,33 +167,33 @@ return {
             })
 
             -- bracketed
-            require("mini.bracketed").setup({
-                comment = { suffix = "z" },
-            })
+     --       require("mini.bracketed").setup({
+       --         comment = { suffix = "z" },
+         --   })
 
             -- comment
-            require("mini.comment").setup({
-                options = {
-                    custom_commentstring = nil,
-                    ignore_blank_line = true,
-                },
-            })
+          --  require("mini.comment").setup({
+           --     options = {
+            --        custom_commentstring = nil,
+             --       ignore_blank_line = true,
+              --  },
+            --})
 
             -- surround
-            require("mini.surround").setup({
-                custom_surroundings = {
-                    ["("] = { input = { "%b()", "^.().*().$" }, output = { left = "(", right = ")" } },
-                    ["["] = { input = { "%b[]", "^.().*().$" }, output = { left = "[", right = "]" } },
-                    ["{"] = { input = { "%b{}", "^.().*().$" }, output = { left = "{", right = "}" } },
-                    ["<"] = { input = { "%b<>", "^.().*().$" }, output = { left = "<", right = ">" } },
-                },
-            })
+            -- require("mini.surround").setup({
+            --     custom_surroundings = {
+            --         ["("] = { input = { "%b()", "^.().*().$" }, output = { left = "(", right = ")" } },
+            --         ["["] = { input = { "%b[]", "^.().*().$" }, output = { left = "[", right = "]" } },
+            --         ["{"] = { input = { "%b{}", "^.().*().$" }, output = { left = "{", right = "}" } },
+            --         ["<"] = { input = { "%b<>", "^.().*().$" }, output = { left = "<", right = ">" } },
+            --     },
+            -- })
 
             -- cursorword, align, move, pairs
-            require("mini.cursorword").setup()
-            require("mini.align").setup()
-            require("mini.move").setup()
-            require("mini.pairs").setup()
+            -- require("mini.cursorword").setup()
+            -- require("mini.align").setup()
+            -- require("mini.move").setup()
+            -- require("mini.pairs").setup()
 
             -- sessions
             require("mini.sessions").setup({
@@ -216,46 +216,46 @@ return {
             ------------------------------------------------------------------
             -- Statusline
             ------------------------------------------------------------------
-            local statusline = require("mini.statusline")
-            statusline.setup({
-                content = {
-                    active = function()
-                        local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
-                        local git = statusline.section_git({ trunc_width = 40 })
-                        local diagnostics = statusline.section_diagnostics({
-                            trunc_width = 75,
-                            signs = { ERROR = "", WARN = "", INFO = "", HINT = "" },
-                        })
-                        local lsp = statusline.section_lsp({ trunc_width = 75 })
-                        local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
-                        local location = statusline.section_location({ trunc_width = 75 })
-                        local search = statusline.section_searchcount({ trunc_width = 75 })
-                        local diff = statusline.section_diff({ trunc_width = 75 })
+        --     local statusline = require("mini.statusline")
+        --     statusline.setup({
+        --         content = {
+        --             active = function()
+        --                 local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+        --                 local git = statusline.section_git({ trunc_width = 40 })
+        --                 local diagnostics = statusline.section_diagnostics({
+        --                     trunc_width = 75,
+        --                     signs = { ERROR = "", WARN = "", INFO = "", HINT = "" },
+        --                 })
+        --                 local lsp = statusline.section_lsp({ trunc_width = 75 })
+        --                 local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
+        --                 local location = statusline.section_location({ trunc_width = 75 })
+        --                 local search = statusline.section_searchcount({ trunc_width = 75 })
+        --                 local diff = statusline.section_diff({ trunc_width = 75 })
 
-                        return statusline.combine_groups({
-                            { hl = mode_hl, strings = { mode } },
-                            { hl = "MiniStatuslineDevinfo", strings = { diff, diagnostics, lsp } },
-                            "%<",
-                            { hl = "MiniStatuslineFilename", strings = { git } },
-                            "%=",
-                            { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-                            { hl = mode_hl, strings = { search, location } },
-                        })
-                    end,
-                    inactive = function()
-                        local filename = statusline.section_filename({ trunc_width = 140 })
-                        local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
+        --                 return statusline.combine_groups({
+        --                     { hl = mode_hl, strings = { mode } },
+        --                     { hl = "MiniStatuslineDevinfo", strings = { diff, diagnostics, lsp } },
+        --                     "%<",
+        --                     { hl = "MiniStatuslineFilename", strings = { git } },
+        --                     "%=",
+        --                     { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
+        --                     { hl = mode_hl, strings = { search, location } },
+        --                 })
+        --             end,
+        --             inactive = function()
+        --                 local filename = statusline.section_filename({ trunc_width = 140 })
+        --                 local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
 
-                        return statusline.combine_groups({
-                            "%<",
-                            { hl = "MiniStatuslineFilename", strings = { filename } },
-                            "%=",
-                            { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-                        })
-                    end,
-                },
-                use_icons = true,
-            })
+        --                 return statusline.combine_groups({
+        --                     "%<",
+        --                     { hl = "MiniStatuslineFilename", strings = { filename } },
+        --                     "%=",
+        --                     { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
+        --                 })
+        --             end,
+        --         },
+        --         use_icons = true,
+        --     })
         end,
     },
 

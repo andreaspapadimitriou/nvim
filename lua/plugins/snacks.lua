@@ -4,11 +4,11 @@ return {
     lazy = false,
     opts = {
         image = {
-            enabled = true,
+            enabled = false,
             force = false,
         },
 
-        gh = {},
+        gh = {enabled = false},
 
         lazygit = {
             configure = true,

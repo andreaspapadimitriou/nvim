@@ -12,7 +12,7 @@ return {
         bigfile = { enabled = true },
         dashboard = { enabled = false }, -- that is like alpha!
         explorer = { enabled = false },
-        indent = { enabled = false },
+        indent = require("indent")({ enabled = true }),
         input = {
             enabled = false, -- even if true not working
             {
@@ -55,10 +55,10 @@ return {
         picker = { enabled = false },
         notifier = { enabled = false }, -- that looks a bit better than the default
         quickfile = { enabled = true },
-        scope = { enabled = true },
+        scope = require("scope")({ enabled = true }),
         scroll = require("scroll")({ enabled = true }),
         statuscolumn = { enabled = false },
-        words = { enabled = true },
+        words = require("words")({ enabled = true }),
         lazygit = require("lazygit")({ enabled = true }),
     },
 
