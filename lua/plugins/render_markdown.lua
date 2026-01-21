@@ -1,4 +1,7 @@
 return {
+    -- This plugin renders markdown files with enhanced styling
+    -- As for now, it does not render images and might be related to 
+    -- the lack of terminal support for it.
     "MeanderingProgrammer/render-markdown.nvim",
     -- cmd = { "RenderMarkdown" },
     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.icons" },

@@ -1,4 +1,4 @@
-    vim.lsp.enable({
+    vim.lsp.enable({ -- all require manual installation of servers
         "lua_ls",
         "clangd",
         "typos_lsp",
