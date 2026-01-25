@@ -3,9 +3,10 @@
         "clangd",
         "typos_lsp",
         "basedpyright",
-        -- "jsonls",
-        -- "marksman",
+        "jsonls",
+        "marksman",
         "cmake",
+        "bashls",
     })
 -- Allow requiring modules placed directly under the config root (e.g. `lsp/*`).
 -- This keeps your `lsp/` folder loadable without moving files into `lua/`.

@@ -12,57 +12,11 @@ help:
 	@echo "  - clangd"
 	@echo "  - typos-lsp"
 	@echo "  - basedpyright"
-	@echo "  - dockerls"
 	@echo "  - jsonls"
 	@echo "  - marksman"
 	@echo "  - azure-pipelines-ls"
 	@echo "  - cmake-ls"
-	@echo "  - starlark-lsp"
-	@echo ""
-	@echo "Debug Adapters:"
-	@echo "  - debugpy (Python debugging)"
-	@echo ""
-	@echo "Programs:"
-	@echo "  - yazi      (Terminal file manager)"
-	@echo "  - fzf       (fuzzy finder)"
-	@echo "  - rg        (fuzzy finder)"
-	@echo "  - ts-cli    (tree-sitter helper)"
-	@echo "  - fd        (file finder)"
-	@echo "  - git-delta (git differ)"
-	@echo "  - ast-grep  (ast finder)"
-	@echo "  - lazygit   (Git TUI)":w
-
-check:
-	@echo "Checking package managers..."
-	@command -v pipx >/dev/null 2>&1 || (echo "❌ pipx not found" && exit 1)
-	@command -v npm >/dev/null 2>&1 || (echo "❌ npm not found" && exit 1)
-	@command -v cargo >/dev/null 2>&1 || (echo "❌ cargo not found" && exit 1)
-	@command -v wget >/dev/null 2>&1 || (echo "❌ wget not found" && exit 1)
-	@command -v unzip >/dev/null 2>&1 || (echo "❌ unzip not found" && exit 1)
-	@echo "✓ All package managers found"
-
-.PHONY: help check install install-lua-ls install-clangd install-typos-lsp install-basedpyright install-dockerls install-jsonls install-marksman install-azure-pipelines-ls install-cmake-ls install-starlark-lsp install-debugpy install-yazi install-fzf install-rg install-tree-sitter-cli install-fd install-git-delta install-ast-grep install-lazygit
-
-INSTALL_DIR := $(HOME)/.local/bin
-LSP_DATA_DIR := $(HOME)/.local/share/nvim-lsp
-
-help:
-	@echo "Available targets:"
-	@echo "  make check          - Check if package managers are installed"
-	@echo "  make install        - Install all LSPs and debug adapters"
-	@echo "  make install-<lsp>  - Install specific LSP"
-	@echo ""
-	@echo "LSPs:"
-	@echo "  - lua-ls (lua_ls)"
-	@echo "  - clangd"
-	@echo "  - typos-lsp"
-	@echo "  - basedpyright"
-	@echo "  - dockerls"
-	@echo "  - jsonls"
-	@echo "  - marksman"
-	@echo "  - azure-pipelines-ls"
-	@echo "  - cmake-ls"
-	@echo "  - starlark-lsp"
+	@echo "  - bashls"
 	@echo ""
 	@echo "Debug Adapters:"
 	@echo "  - debugpy (Python debugging)"
@@ -86,8 +40,22 @@ check:
 	@command -v unzip >/dev/null 2>&1 || (echo "❌ unzip not found" && exit 1)
 	@echo "✓ All package managers found"
 
-install: check install-lua-ls install-clangd install-typos-lsp install-basedpyright install-dockerls install-jsonls install-marksman install-azure-pipelines-ls install-cmake-ls install-starlark-lsp install-debugpy install-yazi
-	@echo "✓ All LSPs, debug adapters and programs installed"
+install: check
+	@echo ""
+	@echo "🔧 This will install:"
+	@echo "   LSPs:      lua-ls, clangd, typos-lsp, basedpyright, jsonls, marksman, azure-pipelines-ls, cmake-ls, bashls"
+	@echo "   Adapters:  debugpy"
+	@echo "   Programs:  yazi"
+	@echo ""
+	@printf "Continue? [y/N] "; \
+	read -r REPLY; \
+	if [ "$$REPLY" = "y" ] || [ "$$REPLY" = "Y" ]; then \
+		$(MAKE) install-lua-ls install-clangd install-typos-lsp install-basedpyright install-jsonls install-marksman install-azure-pipelines-ls install-cmake-ls install-debugpy install-yazi install-bashls; \
+		echo "✓ All LSPs, debug adapters and programs installed"; \
+	else \
+		echo "Installation cancelled."; \
+		exit 1; \
+	fi
 
 # Lua Language Server (GitHub release)
 install-lua-ls:
@@ -125,12 +93,6 @@ install-basedpyright:
 	@pipx install basedpyright
 	@echo "✓ basedpyright installed"
 
-# Docker Language Server (npm)
-install-dockerls:
-	@echo "Installing dockerfile-language-server-nodejs..."
-	@npm install -g dockerfile-language-server-nodejs
-	@echo "✓ dockerfile-language-server-nodejs installed"
-
 # JSON Language Server (npm)
 install-jsonls:
 	@echo "Installing vscode-langservers-extracted..."
@@ -148,47 +110,17 @@ install-marksman:
 	@ln -sf $(LSP_DATA_DIR)/marksman/marksman $(INSTALL_DIR)/marksman
 	@echo "✓ marksman installed"
 
-# Azure Pipelines Language Server (npm)
-install-azure-pipelines-ls:
-	@echo "Installing azure-pipelines-language-server..."
-	@npm install -g azure-pipelines-language-server
-	@echo "✓ azure-pipelines-language-server installed"
-
 # CMake Language Server (pipx)
 install-cmake-ls:
 	@echo "Installing cmake-language-server..."
 	@pipx install cmake-language-server
 	@echo "✓ cmake-language-server installed"
 
-# Starlark LSP (GitHub release)
-install-starlark-lsp:
-	@echo "Installing starpls..."
-	@mkdir -p $(LSP_DATA_DIR)/starpls
-	@cd $(LSP_DATA_DIR)/starpls && \
-		wget -q --show-progress https://github.com/withered-magic/starpls/releases/download/v0.1.22/starpls-linux-amd64 -O starpls && \
-		chmod +x starpls
-	@mkdir -p $(INSTALL_DIR)
-	@ln -sf $(LSP_DATA_DIR)/starpls/starpls $(INSTALL_DIR)/starpls
-	@echo "✓ starpls installed"
-
-# Rust analyzer (rustup)
-install-rust-lsp:
-	@echo "Installing rust-analyzer..."
-	@rustup component add rust-src
-	@rustup component add rust-analyzer
-	@echo "✓ rust-analyzer installed"
-
-# Glsl lsp (GitHub release)
-install-glsl-lsp:
-	@echo "installing glsl_analyzer..."
-	@mkdir -p $(LSP_DATA_DIR)/glsl_analyzer
-	@cd $(LSP_DATA_DIR)/glsl_analyzer && \
-		wget -q --show-progress https://github.com/nolanderc/glsl_analyzer/releases/download/v1.7.1/x86_64-linux-musl.zip -O glsl_analyzer.zip && \
-		unzip glsl_analyzer.zip && \
-		rm glsl_analyzer.zip
-	@mkdir -p $(INSTALL_DIR)
-	@ln -sf $(LSP_DATA_DIR)/glsl_analyzer/bin/glsl_analyzer $(INSTALL_DIR)/glsl_analyzer
-	@echo "✓ glsl_analyzer installed"
+# Bash Language Server (npm)
+install-bashls:
+	@echo "Installing bash-language-server..."
+	@npm install -g bash-language-server
+	@echo "✓ bash-language-server installed"
 
 # Debug Adapters
 
