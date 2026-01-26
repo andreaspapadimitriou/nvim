@@ -49,27 +49,58 @@ end
 
 -- The following is added here to remind that there is autocompletion built-in in nvim 0.11 
 -- so maybe no need to install nvim-cmp or other completion plugins.
+-- Initialize autoformat as enabled by default
+vim.g.autoformat = true
+
 vim.api.nvim_create_autocmd("LspAttach", {
- callback = function(ev)
+    callback = function(ev)
         local bufnr = ev.buf
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if client:supports_method("textDocument/complemetion") then
-        vim.opt.completeopt = {'menu', 'menuone', 'noinsert','fuzzy','popup'}
-    vim.lsp.completion.enable(true, client.id,ev.buf,{autotrigger=true})
-    vim.keymap.set('i','<C-Space>',function()
-        vim.lsp.completion.get()
-    end)
-    end
-    local keymaps = require("lsp.lsp-keymaps")
-    keymaps.default(bufnr)
-    if client.server_capabilities.inlayHintProvider then
+        
+        -- Enable autoformat for this buffer by default
+        vim.b[bufnr].autoformat = true
+        
+        if client:supports_method("textDocument/complemetion") then
+            vim.opt.completeopt = {'menu', 'menuone', 'noinsert','fuzzy','popup'}
+            vim.lsp.completion.enable(true, client.id, ev.buf, {autotrigger=true})
+            vim.keymap.set('i','<C-Space>',function()
+                vim.lsp.completion.get()
+            end)
+        end
+        
+        local keymaps = require("lsp.lsp-keymaps")
+        keymaps.default(bufnr)
+        if client.server_capabilities.inlayHintProvider then
             keymaps.inlay_hints(bufnr)
             vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
-      if client.name == "clangd" then
+        if client.name == "clangd" then
             keymaps.clangd(bufnr)
         end
 
+        if client:supports_method("textDocument/formatting") then
+            vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr(#{timeout_ms:250})"
+
+            if not client:supports_method("textDocument/willSaveWaitUntil") then
+                local group = vim.api.nvim_create_augroup(
+                    "BufSave_" .. bufnr .. "_" .. client.id,
+                    { clear = true }
+                )
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    group = group,
+                    buffer = bufnr,
+                    callback = function()
+                        if vim.b[bufnr].autoformat and vim.g.autoformat then
+                            vim.lsp.buf.format({
+                                bufnr = bufnr,
+                                id = client.id,
+                                async = false,
+                            })
+                        end
+                    end,
+                })
+            end
+        end
     end,
 })
 
