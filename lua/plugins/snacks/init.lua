@@ -13,6 +13,27 @@ return {
         dashboard = { enabled = false }, -- that is like alpha!
         explorer = { enabled = false },
         indent = require("indent")({ enabled = true }),
+        zen = {
+            toggles = {
+                dim = true,
+                git_signs = true,
+                diagnostics = true,
+                inlay_hints = true,
+            },
+            show = {
+                statusline = false,
+                tabline = false,
+            },
+            win = { style = "zen" },
+            zoom = {
+                toggles = {},
+                show = { statusline = true, tabline = true },
+                win = {
+                    backdrop = false,
+                    width = 0, -- full width
+                },
+            },
+        },
         input = {
             enabled = false, -- even if true not working
             {
@@ -61,6 +82,12 @@ return {
         words = require("words")({ enabled = true }),
         lazygit = require("lazygit")({ enabled = true }),
     },
+    config = function(_, opts)
+        require("snacks").setup(opts)
+        -- Keymaps requested
+        Snacks.toggle.zen():map("<leader>uz")
+        Snacks.toggle.zoom():map("<leader>uZ")
+    end,
 
     keys = require("plugins.snacks.keymaps.lazygit"),
     -- more keymaps to be added...

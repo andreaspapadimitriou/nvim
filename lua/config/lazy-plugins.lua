@@ -27,7 +27,7 @@ require("lazy").setup({
     -- require("plugins.zen"),
     -- require("plugins.clangd_extensions"),
     require("plugins.snacks.init"),
-    require("plugins.snacks"),
+    --require("plugins.snacks"),
     require("plugins.render_markdown"),
     -- require("plugins.mason"),
     require("plugins.blink"),
