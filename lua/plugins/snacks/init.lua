@@ -13,68 +13,10 @@ return {
         dashboard = { enabled = false }, -- that is like alpha!
         explorer = { enabled = false },
         indent = require("indent")({ enabled = true }),
-        zen = {
-            toggles = {
-                dim = true,
-                git_signs = true,
-                diagnostics = true,
-                inlay_hints = true,
-            },
-            show = {
-                statusline = false,
-                tabline = false,
-            },
-            win = { style = "zen" },
-            zoom = {
-                toggles = {},
-                show = { statusline = true, tabline = true },
-                win = {
-                    backdrop = false,
-                    width = 0, -- full width
-                },
-            },
-        },
-        input = {
-            enabled = false, -- even if true not working
-            {
-                backdrop = false,
-                position = "float",
-                border = "rounded",
-                title_pos = "center",
-                height = 1,
-                width = 60,
-                relative = "editor",
-                noautocmd = true,
-                row = 2,
-                -- relative = "cursor",
-                -- row = -3,
-                -- col = 0,
-                wo = {
-                    winhighlight = "NormalFloat:SnacksInputNormal,FloatBorder:SnacksInputBorder,FloatTitle:SnacksInputTitle",
-                    cursorline = false,
-                },
-                bo = {
-                    filetype = "snacks_input",
-                    buftype = "prompt",
-                },
-                --- buffer local variables
-                b = {
-                    completion = false, -- disable blink completions in input
-                },
-                keys = {
-                    n_esc = { "<esc>", { "cmp_close", "cancel" }, mode = "n", expr = true },
-                    i_esc = { "<esc>", { "cmp_close", "stopinsert" }, mode = "i", expr = true },
-                    i_cr = { "<cr>", { "cmp_accept", "confirm" }, mode = { "i", "n" }, expr = true },
-                    i_tab = { "<tab>", { "cmp_select_next", "cmp" }, mode = "i", expr = true },
-                    i_ctrl_w = { "<c-w>", "<c-s-w>", mode = "i", expr = true },
-                    i_up = { "<up>", { "hist_up" }, mode = { "i", "n" } },
-                    i_down = { "<down>", { "hist_down" }, mode = { "i", "n" } },
-                    q = "cancel",
-                },
-            },
-        }, -- that looks nice to replace mine!
+        zen = require("zen")({ enabled = true }),
+        input = { enabled = true }, 
         picker = { enabled = false },
-        notifier = { enabled = false }, -- that looks a bit better than the default
+        notifier = { enabled = true },
         quickfile = { enabled = true },
         scope = require("scope")({ enabled = true }),
         scroll = require("scroll")({ enabled = true }),
@@ -82,13 +24,6 @@ return {
         words = require("words")({ enabled = true }),
         lazygit = require("lazygit")({ enabled = true }),
     },
-    config = function(_, opts)
-        require("snacks").setup(opts)
-        -- Keymaps requested
-        Snacks.toggle.zen():map("<leader>uz")
-        Snacks.toggle.zoom():map("<leader>uZ")
-    end,
 
-    keys = require("plugins.snacks.keymaps.lazygit"),
-    -- more keymaps to be added...
+    keys = require("plugins.snacks.keymaps"),
 }
