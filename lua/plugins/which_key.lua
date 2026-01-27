@@ -2,6 +2,24 @@ return {
     "folke/which-key.nvim",
     event = "VimEnter", -- Sets the loading event to 'VimEnter'
     opts = {
+        preset = "modern",
+        plugins = {
+            registers = true,
+            marks = true,
+            presets = {
+                operators = true,
+                motions = true,
+                text_objects = true,
+                windows = true,
+                nav = true,
+                z = true,
+                g = true,
+            },
+        },
+        triggers = {
+            { "s",      mode = "nv" },
+            { "<auto>", mode = "nxsotv" },
+        },
         icons = {
             -- set icon mappings to true if you have a Nerd Font
             mappings = vim.g.have_nerd_font,
@@ -41,7 +59,7 @@ return {
 
         -- Document existing key chains
         spec = {
-            { "<leader>c", group = "[C]ode", mode = { "n", "x" } },
+            { "<leader>c", group = "[C]ode",     mode = { "n", "x" } },
             { "<leader>d", group = "[D]ocument" },
             { "<leader>f", group = "[f]ind" },
             { "<leader>r", group = "[R]ename" },
