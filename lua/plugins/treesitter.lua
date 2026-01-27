@@ -41,7 +41,7 @@ return {
             auto_install = true, -- Automatically install missing language parsers
         },
         config = function(_, opts)
-            local TS = require("nvim-treesitter.configs")
+            local TS = require("nvim-treesitter.config")
             TS.setup(opts)
             
             -- Custom C++ Treesitter highlight overrides
