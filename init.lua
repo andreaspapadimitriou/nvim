@@ -3,6 +3,7 @@ require("vim-remaps")
 require("config.lazy-bootstrap")
 require("config.lazy-plugins")
 require("config.lsp")
+require("config.autocommands")
 
 -- Measure Neovim startup time
 local start_time = vim.loop.hrtime()
