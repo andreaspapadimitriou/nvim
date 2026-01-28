@@ -15,7 +15,6 @@ return {
         indent = require("indent")({ enabled = true }),
         zen = require("zen")({ enabled = true }),
         input = { enabled = true }, 
-        picker = { enabled = false },
         notifier = { enabled = true },
         quickfile = { enabled = true },
         scope = require("scope")({ enabled = true }),
@@ -23,6 +22,37 @@ return {
         statuscolumn = { enabled = false },
         words = require("words")({ enabled = true }),
         lazygit = require("lazygit")({ enabled = true }),
+          terminal = {
+        enabled = true,
+        keys = {
+            q = "hide",
+            gf = function(self)
+                local f = vim.fn.findfile(vim.fn.expand("<cfile>"), "**")
+                if f == "" then
+                    Snacks.notify.warn("No file under cursor")
+                else
+                    self:hide()
+                    vim.schedule(function()
+                        vim.cmd("e " .. f)
+                    end)
+                end
+            end,
+        },
+    },
+        picker = {
+        enabled = true,
+        previewers = {
+            diff = {
+                cmd = { "delta" },
+            },
+        },
+        formatters = {
+            file = {
+                filename_first = true,
+                truncate = 40,
+            },
+        },
+    },
     },
 
     keys = require("plugins.snacks.keymaps"),
