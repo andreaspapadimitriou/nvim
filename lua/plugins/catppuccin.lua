@@ -127,6 +127,26 @@ return {
             local colors = require("catppuccin.palettes").get_palette()
             colors.none = "NONE"
             vim.cmd.colorscheme("catppuccin")
+
+            -- Toggle transparency
+            vim.keymap.set("n", "<leader>ut", function()
+                local cat = require("catppuccin")
+                opts.transparent_background = not opts.transparent_background
+                cat.setup(opts)
+                vim.cmd.colorscheme("catppuccin")
+                vim.notify("Transparency: " .. tostring(opts.transparent_background))
+            end, { desc = "Toggle transparent background" })
+
+            -- Toggle light/dark flavour
+            vim.keymap.set("n", "<leader>uT", function()
+                local cat = require("catppuccin")
+                local is_dark = opts.flavour == "mocha"
+                opts.flavour = is_dark and "latte" or "mocha"
+                vim.o.background = is_dark and "light" or "dark"
+                cat.setup(opts)
+                vim.cmd.colorscheme("catppuccin")
+                vim.notify("Catppuccin flavour: " .. opts.flavour)
+            end, { desc = "Toggle light/dark theme" })
         end,
     },
 }
