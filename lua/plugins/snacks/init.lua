@@ -22,38 +22,10 @@ return {
         statuscolumn = { enabled = false },
         words = require("words")({ enabled = true }),
         lazygit = require("lazygit")({ enabled = true }),
-          terminal = {
-        enabled = true,
-        keys = {
-            q = "hide",
-            gf = function(self)
-                local f = vim.fn.findfile(vim.fn.expand("<cfile>"), "**")
-                if f == "" then
-                    Snacks.notify.warn("No file under cursor")
-                else
-                    self:hide()
-                    vim.schedule(function()
-                        vim.cmd("e " .. f)
-                    end)
-                end
-            end,
-        },
-    },
-        picker = {
-        enabled = true,
-        previewers = {
-            diff = {
-                cmd = { "delta" },
-            },
-        },
-        formatters = {
-            file = {
-                filename_first = true,
-                truncate = 40,
-            },
-        },
-    },
+        picker = require("picker")({ enabled = true }),
     },
 
     keys = require("plugins.snacks.keymaps"),
 }
+
+
