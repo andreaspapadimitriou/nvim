@@ -6,7 +6,8 @@
 
 ## autosave 
 
-* autosave functionality
+* autosave functionality (done)
+* autosession
 
 ## gui for session (dashboard)
 

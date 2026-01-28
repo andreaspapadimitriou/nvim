@@ -21,9 +21,9 @@ return {
         event = "BufEnter",
         keys = {
             {
-                "<f9>",
-                termExec(),
-                desc = "Terminal execute",
+                "<f5>",
+                toggleTerminal("horizontal"),
+                desc = "Toggle horizontal",
                 mode = { "n", "t" },
                 expr = true,
             },
@@ -38,6 +38,13 @@ return {
                 "<f7>",
                 toggleTerminal("float"),
                 desc = "Toggle float",
+                mode = { "n", "t" },
+                expr = true,
+            },
+            {
+                "<f8>",
+                termExec(),
+                desc = "Terminal execute",
                 mode = { "n", "t" },
                 expr = true,
             },
@@ -57,7 +64,7 @@ return {
             on_create = function(terminal)
                 terminal.name = terminal.count
             end,
-            open_mapping = "<f8>",
+            open_mapping = "<f9>",
             hide_number = true,
             autochdir = false,
 
@@ -84,7 +91,7 @@ return {
                     return integral
                 end,
 
-                winblend = 0,
+                winblend = 20,
             },
             winbar = {
                 enabled = false,

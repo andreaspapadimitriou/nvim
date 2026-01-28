@@ -17,7 +17,7 @@ require("lazy").setup({
     require("plugins.mini"),
     -- require("plugins.session"),
     -- require("plugins.telescope.telescope"),
-    -- require("plugins.toggleterm"),
+    require("plugins.toggleterm"),
     require("plugins.treesitter"),
     -- require("plugins.trouble"),
     require("plugins.ui"), -- only bufferline is active - and that need improving
