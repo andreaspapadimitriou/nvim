@@ -195,17 +195,288 @@ return {
             -- require("mini.move").setup()
             -- require("mini.pairs").setup()
 
-            -- sessions
+            ------------------------------------------------------------------
+            -- Custom Session Management
+            ------------------------------------------------------------------
+            local session_dir = vim.fn.expand("~/.cache/nvim-sessions")
+            local max_recent = 8
+
+            -- Ensure session directory exists
+            if vim.fn.isdirectory(session_dir) ~= 1 then
+                vim.fn.mkdir(session_dir, "p")
+            end
+
+            -- Disable mini.sessions autowrite (we handle it ourselves)
             require("mini.sessions").setup({
-                autoread = true,
-                autowrite = true,
-                directory = vim.fn.stdpath("data") .. "/sessions",
-                file = "Session.vim",
+                autoread = false,
+                autowrite = false,
+                directory = session_dir,
+                file = "", -- disable local session detection
             })
 
+            -- Helper: Check if session name is a "recent_" session
+            local function is_recent_session(name)
+                return name and name:match("^recent_") ~= nil
+            end
+
+            -- Helper: Get current session name (nil if none)
+            local function get_current_session_name()
+                local this_session = vim.v.this_session
+                if this_session == "" then return nil end
+                return vim.fn.fnamemodify(this_session, ":t")
+            end
+
+            -- Helper: Generate a new recent session filename
+            local function generate_recent_name()
+                local parent = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+                local timestamp = os.date("%Y%m%d_%H%M%S")
+                return string.format("recent_%s_%s.vim", parent, timestamp)
+            end
+
+            -- Helper: Get all session files sorted by modification time (newest first)
+            local function get_all_sessions()
+                local sessions = {}
+                for name in vim.fs.dir(session_dir) do
+                    if name:match("%.vim$") then
+                        local path = session_dir .. "/" .. name
+                        table.insert(sessions, {
+                            name = name,
+                            path = path,
+                            mtime = vim.fn.getftime(path),
+                        })
+                    end
+                end
+                table.sort(sessions, function(a, b) return a.mtime > b.mtime end)
+                return sessions
+            end
+
+            -- Helper: Get only recent sessions
+            local function get_recent_sessions()
+                local all = get_all_sessions()
+                local recent = {}
+                for _, s in ipairs(all) do
+                    if is_recent_session(s.name) then
+                        table.insert(recent, s)
+                    end
+                end
+                return recent
+            end
+
+            -- Helper: Cleanup old recent sessions (keep only max_recent)
+            local function cleanup_recent_sessions()
+                local recent = get_recent_sessions()
+                while #recent > max_recent do
+                    local oldest = recent[#recent]
+                    vim.fn.delete(oldest.path)
+                    table.remove(recent)
+                end
+            end
+
+            -- Helper: Check if session file exists
+            local function session_exists(name)
+                local path = session_dir .. "/" .. name
+                return vim.fn.filereadable(path) == 1
+            end
+
+            -- Helper: Save session to a specific name
+            local function save_session(name)
+                local path = session_dir .. "/" .. name
+                vim.cmd("mksession! " .. vim.fn.fnameescape(path))
+                vim.v.this_session = path
+                vim.notify("Session saved: " .. name, vim.log.levels.INFO)
+                -- Refresh mini.sessions detected list
+                MiniSessions.detected = {}
+                for _, s in ipairs(get_all_sessions()) do
+                    MiniSessions.detected[s.name] = { name = s.name, path = s.path, type = "global" }
+                end
+            end
+
+            -- Helper: Save to recent (creates new or overwrites current recent)
+            local function save_to_recent()
+                local current = get_current_session_name()
+                local name
+                if current and is_recent_session(current) then
+                    name = current
+                else
+                    name = generate_recent_name()
+                end
+                save_session(name)
+                cleanup_recent_sessions()
+            end
+
+            -- Prompt for session name with validation loop
+            local function prompt_session_name(callback)
+                local function do_prompt()
+                    vim.ui.input({ prompt = "Session name (without .vim): " }, function(input)
+                        if input == nil then
+                            -- User cancelled (Esc/Ctrl+C)
+                            callback(nil)
+                            return
+                        end
+                        input = vim.trim(input)
+                        if input == "" then
+                            vim.notify("Session name cannot be empty", vim.log.levels.WARN)
+                            do_prompt()
+                            return
+                        end
+                        -- Add .vim extension if not present
+                        local name = input:match("%.vim$") and input or (input .. ".vim")
+                        -- Check if exists
+                        if session_exists(name) then
+                            vim.ui.select({ "Yes", "No" }, {
+                                prompt = "Session '" .. name .. "' exists. Overwrite?",
+                            }, function(choice)
+                                if choice == "Yes" then
+                                    callback(name)
+                                else
+                                    do_prompt()
+                                end
+                            end)
+                        else
+                            callback(name)
+                        end
+                    end)
+                end
+                do_prompt()
+            end
+
+            -- Load session
+            local function load_session(name)
+                local path = session_dir .. "/" .. name
+                if vim.fn.filereadable(path) == 1 then
+                    vim.cmd("%bwipeout!")
+                    vim.cmd("source " .. vim.fn.fnameescape(path))
+                    vim.v.this_session = path
+                    vim.notify("Session loaded: " .. name, vim.log.levels.INFO)
+                else
+                    vim.notify("Session not found: " .. name, vim.log.levels.ERROR)
+                end
+            end
+
+            -- Delete session
+            local function delete_session(name)
+                local path = session_dir .. "/" .. name
+                local current = get_current_session_name()
+                vim.fn.delete(path)
+                vim.notify("Session deleted: " .. name, vim.log.levels.INFO)
+                -- If we deleted current session, clear it
+                if current == name then
+                    vim.v.this_session = ""
+                end
+                -- Refresh detected
+                MiniSessions.detected[name] = nil
+            end
+
+            -- <leader>ws - Quick Save
             vim.keymap.set("n", "<leader>ws", function()
-                MiniSessions.write("Session.vim")
+                local current = get_current_session_name()
+                if current and not is_recent_session(current) then
+                    -- Named session: save to it
+                    save_session(current)
+                else
+                    -- No session or recent session: save to recent
+                    save_to_recent()
+                end
             end, { desc = "Save session" })
+
+            -- <leader>was - Save As (prompt for name)
+            vim.keymap.set("n", "<leader>was", function()
+                prompt_session_name(function(name)
+                    if name then
+                        save_session(name)
+                    end
+                end)
+            end, { desc = "Save session as..." })
+
+            -- <leader>wl - Load session
+            vim.keymap.set("n", "<leader>wl", function()
+                local sessions = get_all_sessions()
+                if #sessions == 0 then
+                    vim.notify("No sessions found", vim.log.levels.WARN)
+                    return
+                end
+                local names = {}
+                for _, s in ipairs(sessions) do
+                    table.insert(names, s.name)
+                end
+                vim.ui.select(names, { prompt = "Load session:" }, function(choice)
+                    if choice then
+                        load_session(choice)
+                    end
+                end)
+            end, { desc = "Load session" })
+
+            -- <leader>wd - Delete session
+            vim.keymap.set("n", "<leader>wd", function()
+                local sessions = get_all_sessions()
+                if #sessions == 0 then
+                    vim.notify("No sessions found", vim.log.levels.WARN)
+                    return
+                end
+                local names = {}
+                for _, s in ipairs(sessions) do
+                    table.insert(names, s.name)
+                end
+                vim.ui.select(names, { prompt = "Delete session:" }, function(choice)
+                    if choice then
+                        vim.ui.select({ "Yes", "No" }, {
+                            prompt = "Delete '" .. choice .. "'?",
+                        }, function(confirm)
+                            if confirm == "Yes" then
+                                delete_session(choice)
+                            end
+                        end)
+                    end
+                end)
+            end, { desc = "Delete session" })
+
+            -- Exit handler
+            vim.api.nvim_create_autocmd("VimLeavePre", {
+                callback = function()
+                    local current = get_current_session_name()
+                    if current and not is_recent_session(current) then
+                        -- Named session: auto-save silently
+                        local path = session_dir .. "/" .. current
+                        vim.cmd("mksession! " .. vim.fn.fnameescape(path))
+                        return
+                    end
+
+                    -- No session or recent session: prompt for name (synchronous)
+                    local choice = vim.fn.confirm("Save session before exit?", "&Name\n&Recent\n&Cancel", 2)
+
+                    if choice == 1 then
+                        -- Save with name
+                        local function prompt_name()
+                            local input = vim.fn.input("Session name (without .vim): ")
+                            if input == "" then
+                                local retry = vim.fn.confirm("Name cannot be empty", "&Retry\n&Save as recent", 1)
+                                if retry == 1 then
+                                    return prompt_name()
+                                else
+                                    save_to_recent()
+                                    return
+                                end
+                            end
+                            local name = input:match("%.vim$") and input or (input .. ".vim")
+                            if session_exists(name) then
+                                local overwrite = vim.fn.confirm("Session '" .. name .. "' exists. Overwrite?", "&Yes\n&No", 2)
+                                if overwrite == 1 then
+                                    save_session(name)
+                                else
+                                    return prompt_name()
+                                end
+                            else
+                                save_session(name)
+                            end
+                        end
+                        prompt_name()
+                    elseif choice == 2 then
+                        -- Save as recent
+                        save_to_recent()
+                    end
+                    -- choice == 3 (Cancel) or 0 (Esc): don't save anything
+                end,
+            })
 
             -- visits mappings
             vim.keymap.set("n", "<leader>ma", function() MiniVisits.add_label() end, { desc = "Add visit mark" })
