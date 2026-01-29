@@ -441,6 +441,13 @@ return {
                         return
                     end
 
+                    -- Disable noice temporarily for exit prompts
+                    local noice_enabled = vim.g.noice_disable ~= 1
+                    if noice_enabled then
+                        pcall(require, "noice")
+                        local ok = pcall(require("noice").disable)
+                    end
+
                     -- No session or recent session: prompt for name (synchronous)
                     local choice = vim.fn.confirm("Save session before exit?", "&Name\n&Recent\n&Cancel", 2)
 
@@ -473,6 +480,11 @@ return {
                     elseif choice == 2 then
                         -- Save as recent
                         save_to_recent()
+                    end
+
+                    -- Re-enable noice
+                    if noice_enabled then
+                        pcall(require("noice").enable)
                     end
                     -- choice == 3 (Cancel) or 0 (Esc): don't save anything
                 end,
