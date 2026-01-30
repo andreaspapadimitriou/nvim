@@ -110,6 +110,20 @@ return {
         desc = "Find home File",
     },
     {
+        "<leader>flr",
+        function()
+            Snacks.picker.lsp_references()
+        end,
+        desc = "Find LSP References",
+    },
+{
+        "<leader>flj",
+        function()
+            Snacks.picker.lsp_implementations()
+        end,
+        desc = "Find LSP References",
+    },
+    {
         "<leader>fc",
         function()
             Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
