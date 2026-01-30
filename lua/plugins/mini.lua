@@ -214,9 +214,9 @@ return {
                 file = "", -- disable local session detection
             })
 
-            -- Helper: Check if session name is a "recent_" session
+            -- Helper: Check if session name is an unnamed recent session
             local function is_recent_session(name)
-                return name and name:match("^recent_") ~= nil
+                return name and name:match("^_") ~= nil
             end
 
             -- Helper: Get current session name (nil if none)
@@ -229,8 +229,9 @@ return {
             -- Helper: Generate a new recent session filename
             local function generate_recent_name()
                 local parent = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-                local timestamp = os.date("%Y%m%d_%H%M%S")
-                return string.format("recent_%s_%s.vim", parent, timestamp)
+                parent = parent:gsub("[^%w_-]", "_")
+                local timestamp = os.date("%y%m%d_%H%M%S")
+                return string.format("_%s_%s.vim", timestamp, parent)
             end
 
             -- Helper: Get all session files sorted by modification time (newest first)
@@ -417,16 +418,30 @@ return {
                 for _, s in ipairs(sessions) do
                     table.insert(names, s.name)
                 end
+                if #sessions > 1 then
+                    table.insert(names, "[Delete all sessions]")
+                end
                 vim.ui.select(names, { prompt = "Delete session:" }, function(choice)
-                    if choice then
+                    if not choice then return end
+                    if choice == "[Delete all sessions]" then
                         vim.ui.select({ "Yes", "No" }, {
-                            prompt = "Delete '" .. choice .. "'?",
+                            prompt = "Delete ALL sessions?",
                         }, function(confirm)
                             if confirm == "Yes" then
-                                delete_session(choice)
+                                for _, s in ipairs(sessions) do
+                                    delete_session(s.name)
+                                end
                             end
                         end)
+                        return
                     end
+                    vim.ui.select({ "Yes", "No" }, {
+                        prompt = "Delete '" .. choice .. "'?",
+                    }, function(confirm)
+                        if confirm == "Yes" then
+                            delete_session(choice)
+                        end
+                    end)
                 end)
             end, { desc = "Delete session" })
 
@@ -441,52 +456,8 @@ return {
                         return
                     end
 
-                    -- Disable noice temporarily for exit prompts
-                    local noice_enabled = vim.g.noice_disable ~= 1
-                    if noice_enabled then
-                        pcall(require, "noice")
-                        local ok = pcall(require("noice").disable)
-                    end
-
-                    -- No session or recent session: prompt for name (synchronous)
-                    local choice = vim.fn.confirm("Save session before exit?", "&Name\n&Recent\n&Cancel", 2)
-
-                    if choice == 1 then
-                        -- Save with name
-                        local function prompt_name()
-                            local input = vim.fn.input("Session name (without .vim): ")
-                            if input == "" then
-                                local retry = vim.fn.confirm("Name cannot be empty", "&Retry\n&Save as recent", 1)
-                                if retry == 1 then
-                                    return prompt_name()
-                                else
-                                    save_to_recent()
-                                    return
-                                end
-                            end
-                            local name = input:match("%.vim$") and input or (input .. ".vim")
-                            if session_exists(name) then
-                                local overwrite = vim.fn.confirm("Session '" .. name .. "' exists. Overwrite?", "&Yes\n&No", 2)
-                                if overwrite == 1 then
-                                    save_session(name)
-                                else
-                                    return prompt_name()
-                                end
-                            else
-                                save_session(name)
-                            end
-                        end
-                        prompt_name()
-                    elseif choice == 2 then
-                        -- Save as recent
-                        save_to_recent()
-                    end
-
-                    -- Re-enable noice
-                    if noice_enabled then
-                        pcall(require("noice").enable)
-                    end
-                    -- choice == 3 (Cancel) or 0 (Esc): don't save anything
+                    -- No session or recent session: save to recent
+                    save_to_recent()
                 end,
             })
 
