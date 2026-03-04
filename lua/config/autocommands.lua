@@ -1,10 +1,29 @@
--- Autosave implementation with debounce for InsertLeave
+-- Autosave implementation with debounce
 local autosave_timer = nil
 local autosave_debounce_ms = 10000
+vim.g.autosave_enabled = true -- Global toggle for autosave
+
+-- Filetypes to skip autosave
+local autosave_skip_filetypes = {
+    gitcommit = true,
+    gitrebase = true,
+    hgcommit = true,
+}
 
 local function autosave(bufnr)
+    -- Skip if autosave is disabled
+    if not vim.g.autosave_enabled then
+        return
+    end
+
     -- Skip if buffer is not valid
     if not vim.api.nvim_buf_is_valid(bufnr) then
+        return
+    end
+
+    -- Skip certain filetypes
+    local ft = vim.bo[bufnr].filetype
+    if autosave_skip_filetypes[ft] then
         return
     end
 
@@ -23,7 +42,8 @@ local function autosave(bufnr)
     end
 end
 
-vim.api.nvim_create_autocmd("BufLeave", {
+-- Immediate save on BufLeave or FocusLost
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
     pattern = "*",
     callback = function(args)
         autosave(args.buf)
@@ -41,7 +61,8 @@ vim.api.nvim_create_autocmd("InsertEnter", {
     end,
 })
 
-vim.api.nvim_create_autocmd("InsertLeave", {
+-- Deferred save for InsertLeave and TextChanged (covers undo, paste, etc.)
+vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
     pattern = "*",
     callback = function(args)
         -- Cancel existing timer if any
@@ -73,4 +94,11 @@ vim.api.nvim_create_autocmd("VimLeave", {
         end
     end,
 })
+
+-- Toggle autosave keymap
+vim.keymap.set("n", "<leader>wab", function()
+    vim.g.autosave_enabled = not vim.g.autosave_enabled
+    local status = vim.g.autosave_enabled and "enabled" or "disabled"
+    vim.notify("Autosave " .. status, vim.log.levels.INFO)
+end, { desc = "Toggle buffer autosave" })
 
