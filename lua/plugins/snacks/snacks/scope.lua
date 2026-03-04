@@ -9,7 +9,9 @@ return function(opts)
         siblings = false,
         -- what buffers to attach to (keeps the default behavior)
         filter = function(buf)
-            return vim.bo[buf].buftype == "" and vim.b[buf].snacks_scope ~= false and vim.g.snacks_scope ~= false
+            return vim.bo[buf].buftype == ""
+                and vim.b[buf].snacks_scope ~= false
+                and vim.g.snacks_scope ~= false
         end,
         -- debounce scope detection in ms
         debounce = 30,

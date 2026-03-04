@@ -1,13 +1,13 @@
-    vim.lsp.enable({ -- all require manual installation of servers
-        "lua_ls",
-        "clangd",
-        "typos_lsp",
-        "basedpyright",
-        "jsonls",
-        "marksman",
-        "cmake",
-        "bashls",
-    })
+vim.lsp.enable({ -- all require manual installation of servers
+    "lua_ls",
+    "clangd",
+    "typos_lsp",
+    "basedpyright",
+    "jsonls",
+    "marksman",
+    "cmake",
+    "bashls",
+})
 -- Allow requiring modules placed directly under the config root (e.g. `lsp/*`).
 -- This keeps your `lsp/` folder loadable without moving files into `lua/`.
 do
@@ -47,7 +47,7 @@ end
 --     end,
 -- })
 
--- The following is added here to remind that there is autocompletion built-in in nvim 0.11 
+-- The following is added here to remind that there is autocompletion built-in in nvim 0.11
 -- so maybe no need to install nvim-cmp or other completion plugins.
 -- Initialize autoformat as enabled by default
 vim.g.autoformat = true
@@ -56,18 +56,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(ev)
         local bufnr = ev.buf
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        
+
         -- Enable autoformat for this buffer by default
         vim.b[bufnr].autoformat = true
-        
+
         if client:supports_method("textDocument/complemetion") then
-            vim.opt.completeopt = {'menu', 'menuone', 'noinsert','fuzzy','popup'}
-            vim.lsp.completion.enable(true, client.id, ev.buf, {autotrigger=true})
-            vim.keymap.set('i','<C-Space>',function()
+            vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
+            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+            vim.keymap.set("i", "<C-Space>", function()
                 vim.lsp.completion.get()
             end)
         end
-        
+
         local keymaps = require("lsp.lsp-keymaps")
         keymaps.default(bufnr)
         if client.server_capabilities.inlayHintProvider then

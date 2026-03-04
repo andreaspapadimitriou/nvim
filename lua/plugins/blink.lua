@@ -1,6 +1,6 @@
 return {
     "Saghen/blink.cmp",
-    version = "1.*",  -- use prebuilt binary release
+    version = "1.*", -- use prebuilt binary release
     event = "InsertEnter",
     opts = {
         snippets = { preset = "mini_snippets" },

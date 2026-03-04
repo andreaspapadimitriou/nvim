@@ -1,6 +1,6 @@
 return {
     -- This plugin renders markdown files with enhanced styling
-    -- As for now, it does not render images and might be related to 
+    -- As for now, it does not render images and might be related to
     -- the lack of terminal support for it.
     "MeanderingProgrammer/render-markdown.nvim",
     -- cmd = { "RenderMarkdown" },
@@ -9,7 +9,7 @@ return {
     init = function()
         -- Get Catppuccin Mocha colors
         local colors = require("catppuccin.palettes").get_palette("mocha")
-        
+
         local color1_bg = colors.red
         local color2_bg = colors.peach
         local color3_bg = colors.yellow
@@ -35,14 +35,13 @@ return {
         vim.cmd(string.format([[highlight Headline4Fg cterm=bold gui=bold guifg=%s]], color4_bg))
         vim.cmd(string.format([[highlight Headline5Fg cterm=bold gui=bold guifg=%s]], color5_bg))
         vim.cmd(string.format([[highlight Headline6Fg cterm=bold gui=bold guifg=%s]], color6_bg))
-
     end,
     opts = {
         heading = {
             sign = true,
 
             completions = {
-                  blink = { enabled = false }
+                blink = { enabled = false },
             },
             backgrounds = {
                 "Headline1Bg",
@@ -60,28 +59,28 @@ return {
                 "Headline5Fg",
                 "Headline6Fg",
             },
-                    sign = {
-            -- Turn on / off sign rendering.
-            enabled = true,
-            -- Applies to background of sign text.
-            highlight = 'RenderMarkdownSign',
-        },
-        inline_highlight = {
-            -- Mimics Obsidian inline highlights when content is surrounded by double equals.
-            -- The equals on both ends are concealed and the inner content is highlighted.
-    
-            -- Turn on / off inline highlight rendering.
-            enabled = true,
-            -- Additional modes to render inline highlights.
-            render_modes = false,
-            -- Applies to background of surrounded text.
-            highlight = 'RenderMarkdownInlineHighlight',
-            -- Define custom highlights based on text prefix.
-            -- The key is for healthcheck and to allow users to change its values, value type below.
-            -- | prefix    | matched against text body, @see :h vim.startswith() |
-            -- | highlight | highlight for text body                             |
-            custom = {},
-        },
+            sign = {
+                -- Turn on / off sign rendering.
+                enabled = true,
+                -- Applies to background of sign text.
+                highlight = "RenderMarkdownSign",
+            },
+            inline_highlight = {
+                -- Mimics Obsidian inline highlights when content is surrounded by double equals.
+                -- The equals on both ends are concealed and the inner content is highlighted.
+
+                -- Turn on / off inline highlight rendering.
+                enabled = true,
+                -- Additional modes to render inline highlights.
+                render_modes = false,
+                -- Applies to background of surrounded text.
+                highlight = "RenderMarkdownInlineHighlight",
+                -- Define custom highlights based on text prefix.
+                -- The key is for healthcheck and to allow users to change its values, value type below.
+                -- | prefix    | matched against text body, @see :h vim.startswith() |
+                -- | highlight | highlight for text body                             |
+                custom = {},
+            },
         },
     },
     config = function(_, opts)

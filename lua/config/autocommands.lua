@@ -101,4 +101,3 @@ vim.keymap.set("n", "<leader>wab", function()
     local status = vim.g.autosave_enabled and "enabled" or "disabled"
     vim.notify("Autosave " .. status, vim.log.levels.INFO)
 end, { desc = "Toggle buffer autosave" })
-

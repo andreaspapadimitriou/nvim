@@ -17,7 +17,7 @@ return {
             },
         },
         triggers = {
-            { "s",      mode = "nv" },
+            { "s", mode = "nv" },
             { "<auto>", mode = "nxsotv" },
         },
         icons = {
@@ -59,7 +59,7 @@ return {
 
         -- Document existing key chains
         spec = {
-            { "<leader>c", group = "[C]ode",     mode = { "n", "x" } },
+            { "<leader>c", group = "[C]ode", mode = { "n", "x" } },
             { "<leader>d", group = "[D]ocument" },
             { "<leader>f", group = "[f]ind" },
             { "<leader>r", group = "[R]ename" },

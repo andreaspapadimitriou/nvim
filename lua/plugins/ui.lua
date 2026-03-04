@@ -62,24 +62,24 @@ return {
                 lsp_doc_border = false,
             },
             views = {
-    cmdline_popup = {
-        position = {
-            row = 10,      -- distance from top
-            col = math.floor(vim.o.columns / 2) - 60/2,      -- distance from left
-        },
-        size = {
-            width = 60,
-            height = "auto",
-        },
-        border = {
-            style = "rounded",
-            padding = { 0, 1 },
-        },
-        win_options = {
-            winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-        },
-    },
-}
+                cmdline_popup = {
+                    position = {
+                        row = 10, -- distance from top
+                        col = math.floor(vim.o.columns / 2) - 60 / 2, -- distance from left
+                    },
+                    size = {
+                        width = 60,
+                        height = "auto",
+                    },
+                    border = {
+                        style = "rounded",
+                        padding = { 0, 1 },
+                    },
+                    win_options = {
+                        winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+                    },
+                },
+            },
         },
         config = function(_, opts)
             if vim.o.filetype == "lazy" then

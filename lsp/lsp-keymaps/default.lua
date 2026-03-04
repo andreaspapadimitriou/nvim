@@ -18,7 +18,9 @@ return function(bufnr)
         },
         {
             "<leader>qw",
-            function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+            function()
+                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end,
             buffer = bufnr,
             desc = "List workspace folder",
         },
@@ -27,13 +29,17 @@ return function(bufnr)
         { "<leader>t", buffer = bufnr, group = "Toggle" },
         {
             "<leader>tD",
-            function() vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = nil })) end,
+            function()
+                vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = nil }))
+            end,
             buffer = bufnr,
             desc = "Toggle diagnostics buffers",
         },
         {
             "<leader>td",
-            function() vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = 0 })) end,
+            function()
+                vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = 0 }))
+            end,
             buffer = bufnr,
             desc = "Toggle diagnostics for current buffer",
         },

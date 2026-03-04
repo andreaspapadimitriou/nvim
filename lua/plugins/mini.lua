@@ -134,10 +134,10 @@ return {
         version = false,
         config = function()
             -- splitjoin
-   --         require("mini.splitjoin").setup()
+            --         require("mini.splitjoin").setup()
 
             -- visits
-           require("mini.visits").setup()
+            require("mini.visits").setup()
 
             -- icons
             require("mini.icons").setup({
@@ -167,16 +167,16 @@ return {
             })
 
             -- bracketed
-     --       require("mini.bracketed").setup({
-       --         comment = { suffix = "z" },
-         --   })
+            --       require("mini.bracketed").setup({
+            --         comment = { suffix = "z" },
+            --   })
 
             -- comment
-          --  require("mini.comment").setup({
-           --     options = {
+            --  require("mini.comment").setup({
+            --     options = {
             --        custom_commentstring = nil,
-             --       ignore_blank_line = true,
-              --  },
+            --       ignore_blank_line = true,
+            --  },
             --})
 
             -- surround
@@ -222,7 +222,9 @@ return {
             -- Helper: Get current session name (nil if none)
             local function get_current_session_name()
                 local this_session = vim.v.this_session
-                if this_session == "" then return nil end
+                if this_session == "" then
+                    return nil
+                end
                 return vim.fn.fnamemodify(this_session, ":t")
             end
 
@@ -247,7 +249,9 @@ return {
                         })
                     end
                 end
-                table.sort(sessions, function(a, b) return a.mtime > b.mtime end)
+                table.sort(sessions, function(a, b)
+                    return a.mtime > b.mtime
+                end)
                 return sessions
             end
 
@@ -288,7 +292,8 @@ return {
                 -- Refresh mini.sessions detected list
                 MiniSessions.detected = {}
                 for _, s in ipairs(get_all_sessions()) do
-                    MiniSessions.detected[s.name] = { name = s.name, path = s.path, type = "global" }
+                    MiniSessions.detected[s.name] =
+                        { name = s.name, path = s.path, type = "global" }
                 end
             end
 
@@ -422,7 +427,9 @@ return {
                     table.insert(names, "[Delete all sessions]")
                 end
                 vim.ui.select(names, { prompt = "Delete session:" }, function(choice)
-                    if not choice then return end
+                    if not choice then
+                        return
+                    end
                     if choice == "[Delete all sessions]" then
                         vim.ui.select({ "Yes", "No" }, {
                             prompt = "Delete ALL sessions?",
@@ -462,55 +469,62 @@ return {
             })
 
             -- visits mappings
-            vim.keymap.set("n", "<leader>ma", function() MiniVisits.add_label() end, { desc = "Add visit mark" })
-            vim.keymap.set("n", "<leader>md", function() MiniVisits.remove_label() end, { desc = "Remove visit mark" })
-            vim.keymap.set("n", "<leader>ml", function() MiniVisits.select_label() end, { desc = "List visit marks" })
-            vim.keymap.set("n", "<leader>mp", function() MiniVisits.select_path() end, { desc = "List visit paths" })
+            vim.keymap.set("n", "<leader>ma", function()
+                MiniVisits.add_label()
+            end, { desc = "Add visit mark" })
+            vim.keymap.set("n", "<leader>md", function()
+                MiniVisits.remove_label()
+            end, { desc = "Remove visit mark" })
+            vim.keymap.set("n", "<leader>ml", function()
+                MiniVisits.select_label()
+            end, { desc = "List visit marks" })
+            vim.keymap.set("n", "<leader>mp", function()
+                MiniVisits.select_path()
+            end, { desc = "List visit paths" })
 
             ------------------------------------------------------------------
             -- Statusline
             ------------------------------------------------------------------
-        --     local statusline = require("mini.statusline")
-        --     statusline.setup({
-        --         content = {
-        --             active = function()
-        --                 local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
-        --                 local git = statusline.section_git({ trunc_width = 40 })
-        --                 local diagnostics = statusline.section_diagnostics({
-        --                     trunc_width = 75,
-        --                     signs = { ERROR = "", WARN = "", INFO = "", HINT = "" },
-        --                 })
-        --                 local lsp = statusline.section_lsp({ trunc_width = 75 })
-        --                 local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
-        --                 local location = statusline.section_location({ trunc_width = 75 })
-        --                 local search = statusline.section_searchcount({ trunc_width = 75 })
-        --                 local diff = statusline.section_diff({ trunc_width = 75 })
+            --     local statusline = require("mini.statusline")
+            --     statusline.setup({
+            --         content = {
+            --             active = function()
+            --                 local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+            --                 local git = statusline.section_git({ trunc_width = 40 })
+            --                 local diagnostics = statusline.section_diagnostics({
+            --                     trunc_width = 75,
+            --                     signs = { ERROR = "", WARN = "", INFO = "", HINT = "" },
+            --                 })
+            --                 local lsp = statusline.section_lsp({ trunc_width = 75 })
+            --                 local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
+            --                 local location = statusline.section_location({ trunc_width = 75 })
+            --                 local search = statusline.section_searchcount({ trunc_width = 75 })
+            --                 local diff = statusline.section_diff({ trunc_width = 75 })
 
-        --                 return statusline.combine_groups({
-        --                     { hl = mode_hl, strings = { mode } },
-        --                     { hl = "MiniStatuslineDevinfo", strings = { diff, diagnostics, lsp } },
-        --                     "%<",
-        --                     { hl = "MiniStatuslineFilename", strings = { git } },
-        --                     "%=",
-        --                     { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-        --                     { hl = mode_hl, strings = { search, location } },
-        --                 })
-        --             end,
-        --             inactive = function()
-        --                 local filename = statusline.section_filename({ trunc_width = 140 })
-        --                 local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
+            --                 return statusline.combine_groups({
+            --                     { hl = mode_hl, strings = { mode } },
+            --                     { hl = "MiniStatuslineDevinfo", strings = { diff, diagnostics, lsp } },
+            --                     "%<",
+            --                     { hl = "MiniStatuslineFilename", strings = { git } },
+            --                     "%=",
+            --                     { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
+            --                     { hl = mode_hl, strings = { search, location } },
+            --                 })
+            --             end,
+            --             inactive = function()
+            --                 local filename = statusline.section_filename({ trunc_width = 140 })
+            --                 local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
 
-        --                 return statusline.combine_groups({
-        --                     "%<",
-        --                     { hl = "MiniStatuslineFilename", strings = { filename } },
-        --                     "%=",
-        --                     { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-        --                 })
-        --             end,
-        --         },
-        --         use_icons = true,
-        --     })
+            --                 return statusline.combine_groups({
+            --                     "%<",
+            --                     { hl = "MiniStatuslineFilename", strings = { filename } },
+            --                     "%=",
+            --                     { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
+            --                 })
+            --             end,
+            --         },
+            --         use_icons = true,
+            --     })
         end,
     },
-
 }

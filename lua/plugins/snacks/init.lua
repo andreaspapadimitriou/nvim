@@ -14,7 +14,7 @@ return {
         explorer = { enabled = false },
         indent = require("indent")({ enabled = true }),
         zen = require("zen")({ enabled = true }),
-        input = { enabled = true }, 
+        input = { enabled = true },
         notifier = { enabled = true },
         quickfile = { enabled = true },
         scope = require("scope")({ enabled = true }),
@@ -27,5 +27,3 @@ return {
 
     keys = require("plugins.snacks.keymaps"),
 }
-
-
