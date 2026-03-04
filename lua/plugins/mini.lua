@@ -455,6 +455,21 @@ return {
             -- Exit handler
             vim.api.nvim_create_autocmd("VimLeavePre", {
                 callback = function()
+                    -- Close sidekick CLI before saving session
+                    pcall(function()
+                        require("sidekick.cli").close()
+                    end)
+
+                    -- Delete all terminal buffers to avoid session corruption
+                    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                        if vim.api.nvim_buf_is_valid(buf) then
+                            local buftype = vim.bo[buf].buftype
+                            if buftype == "terminal" then
+                                pcall(vim.api.nvim_buf_delete, buf, { force = true })
+                            end
+                        end
+                    end
+
                     local current = get_current_session_name()
                     if current and not is_recent_session(current) then
                         -- Named session: auto-save silently

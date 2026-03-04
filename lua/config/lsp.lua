@@ -7,6 +7,7 @@ vim.lsp.enable({ -- all require manual installation of servers
     "marksman",
     "cmake",
     "bashls",
+    "copilot",
 })
 -- Allow requiring modules placed directly under the config root (e.g. `lsp/*`).
 -- This keeps your `lsp/` folder loadable without moving files into `lua/`.

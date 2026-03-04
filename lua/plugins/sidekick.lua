@@ -11,33 +11,26 @@ return {
     keys = {
         {
             -- default keybind was tab but conflicts with other bufferline
-            "<leader><tab>",
+            "<tab>",
             function()
                 -- if there is a next edit, jump to it, otherwise apply it if any
                 if not require("sidekick").nes_jump_or_apply() then
-                    return "<leader><Tab>" -- fallback to normal tab
+                    return "<Tab>" -- fallback to normal tab
                 end
             end,
             expr = true,
             desc = "Goto/Apply Next Edit Suggestion",
         },
         {
-            "<c-.>",
+            "<M-.>",
             function()
-                require("sidekick.cli").toggle()
+                 require("sidekick.cli").toggle({ name = "copilot", focus = false })
             end,
             desc = "Sidekick Toggle",
             mode = { "n", "t", "i", "x" },
         },
         {
-            "<leader>aa",
-            function()
-                require("sidekick.cli").toggle()
-            end,
-            desc = "Sidekick Toggle CLI",
-        },
-        {
-            "<leader>as",
+            "<leader>is",
             function()
                 require("sidekick.cli").select()
             end,
@@ -46,14 +39,14 @@ return {
             desc = "Select CLI",
         },
         {
-            "<leader>ad",
+            "<leader>id",
             function()
                 require("sidekick.cli").close()
             end,
             desc = "Detach a CLI Session",
         },
         {
-            "<leader>at",
+            "<leader>ix",
             function()
                 require("sidekick.cli").send({ msg = "{this}" })
             end,
@@ -61,14 +54,14 @@ return {
             desc = "Send This",
         },
         {
-            "<leader>af",
+            "<leader>if",
             function()
                 require("sidekick.cli").send({ msg = "{file}" })
             end,
             desc = "Send File",
         },
         {
-            "<leader>av",
+            "<leader>iv",
             function()
                 require("sidekick.cli").send({ msg = "{selection}" })
             end,
@@ -76,20 +69,61 @@ return {
             desc = "Send Visual Selection",
         },
         {
-            "<leader>ap",
+            "<leader>ip",
             function()
                 require("sidekick.cli").prompt()
             end,
             mode = { "n", "x" },
-            desc = "Sidekick Select Prompt",
+            desc = "Prompt actions",
         },
         -- Example of a keybinding to open Claude directly
         {
-            "<leader>ac",
+            "<leader>it",
             function()
-                require("sidekick.cli").toggle({ name = "claude", focus = true })
+                require("sidekick.cli").toggle({ name = "copilot", focus = true })
             end,
-            desc = "Sidekick Toggle Claude",
+            desc = "Toggle Copilot",
+        },
+        -- NES (Next Edit Suggestions) keymaps - uppercase versions of copilot.lua suggestion keymaps
+        {
+            "<M-A>", -- uppercase of <M-a> (accept)
+            function()
+                require("sidekick.nes").apply()
+            end,
+            mode = { "n", "i" },
+            desc = "NES Apply Edit",
+        },
+        {
+            "<M-}>", -- uppercase of <M-]> (next)
+            function()
+                require("sidekick.nes").jump()
+            end,
+            mode = { "n", "i" },
+            desc = "NES Jump to Next Edit",
+        },
+        {
+            "<M-{>", -- uppercase of <M-[> (prev) - used for refresh
+            function()
+                require("sidekick.nes").update()
+            end,
+            mode = { "n", "i" },
+            desc = "NES Request Update",
+        },
+        {
+            "<C-}>", -- uppercase of <C-]> (dismiss)
+            function()
+                require("sidekick.nes").clear()
+            end,
+            mode = { "n", "i" },
+            desc = "NES Clear/Dismiss",
+        },
+        {
+            "<M-T>", -- toggle NES on/off
+            function()
+                require("sidekick.nes").toggle()
+            end,
+            mode = { "n" },
+            desc = "NES Toggle",
         },
     },
 }

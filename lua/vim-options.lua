@@ -1,6 +1,7 @@
 _G.external = false
 
 -- Disable (optional)providers (and warning) by adding 
+-- Disable (optional)providers (and warning) by adding
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -105,3 +106,6 @@ vim.opt.updatetime = 200
 vim.opt.colorcolumn = ""
 
 vim.opt.winborder = "rounded"
+
+-- Session options: exclude terminal buffers from sessions
+vim.opt.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos"

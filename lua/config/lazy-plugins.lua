@@ -6,7 +6,7 @@ require("lazy").setup({
     -- require("plugins.comment"),
     -- require("plugins.completions"),
     -- require("plugins.conform"),
-    -- require("plugins.copilot"),
+    require("plugins.copilot"),
     require("plugins.sidekick"),
     -- require("plugins.diffview"),
     require("plugins.flash"),
