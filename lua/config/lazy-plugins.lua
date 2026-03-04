@@ -1,6 +1,6 @@
 -- [[ Configure and install plugins ]]
 require("lazy").setup({
-    -- require("plugins.alpha"),
+    require("plugins.alpha"),
     -- require("plugins.autopairs"), -- can be removed or replaced?
     require("plugins.catppuccin"),
     -- require("plugins.comment"),
@@ -11,7 +11,7 @@ require("lazy").setup({
     -- require("plugins.diffview"),
     require("plugins.flash"),
     -- require("plugins.fzf"),
-    -- require("plugins.gitcrap"),
+    require("plugins.gitcrap"),
     -- require("plugins.grug"),
     require("plugins.lualine"), -- (I decided I like it)
     require("plugins.mini"),
@@ -19,7 +19,7 @@ require("lazy").setup({
     -- require("plugins.telescope.telescope"),
     require("plugins.toggleterm"),
     require("plugins.treesitter"),
-    -- require("plugins.trouble"),
+    require("plugins.trouble"),
     require("plugins.ui"), -- only bufferline is active - and that need improving
     require("plugins.undotree"),
     -- require("plugins.unception"),

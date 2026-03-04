@@ -107,7 +107,6 @@ return {
                 blink_cmp = true,
                 grug_far = true,
                 snacks = true,
-                markview = true,
             },
             custom_highlights = function(c)
                 return {
