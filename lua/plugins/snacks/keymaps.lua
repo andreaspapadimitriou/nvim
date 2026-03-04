@@ -116,12 +116,12 @@ return {
         end,
         desc = "Find LSP References",
     },
-{
+    {
         "<leader>flj",
         function()
             Snacks.picker.lsp_implementations()
         end,
-        desc = "Find LSP References",
+        desc = "Find LSP Implementations",
     },
     {
         "<leader>fc",
