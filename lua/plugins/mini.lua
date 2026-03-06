@@ -419,37 +419,158 @@ return {
                     vim.notify("No sessions found", vim.log.levels.WARN)
                     return
                 end
+                
                 local names = {}
                 for _, s in ipairs(sessions) do
                     table.insert(names, s.name)
                 end
+                
                 if #sessions > 1 then
                     table.insert(names, "[Delete all sessions]")
                 end
-                vim.ui.select(names, { prompt = "Delete session:" }, function(choice)
-                    if not choice then
-                        return
+                
+                -- Create a custom picker with Ctrl+X support
+                local picker_buf = vim.api.nvim_create_buf(false, true)
+                local picker_win = vim.api.nvim_open_win(picker_buf, true, {
+                    relative = "editor",
+                    width = 60,
+                    height = math.min(#names + 3, 20),
+                    col = (vim.o.columns - 60) / 2,
+                    row = (vim.o.lines - 20) / 2,
+                    style = "minimal",
+                    border = "rounded",
+                    title = " Delete Session (Ctrl+X to delete without confirm) ",
+                    title_pos = "center",
+                })
+                
+                -- Set buffer options
+                vim.api.nvim_set_option_value("filetype", "session_picker", { buf = picker_buf })
+                vim.api.nvim_set_option_value("modifiable", true, { buf = picker_buf })
+                
+                -- Display sessions
+                vim.api.nvim_buf_set_lines(picker_buf, 0, -1, false, names)
+                vim.api.nvim_set_option_value("modifiable", false, { buf = picker_buf })
+                
+                -- Track current selection
+                local current_idx = 1
+                
+                -- Highlight first line
+                vim.api.nvim_buf_add_highlight(picker_buf, -1, "CursorLine", current_idx - 1, 0, -1)
+                
+                -- Helper to clear highlights
+                local function clear_highlights()
+                    vim.api.nvim_buf_clear_namespace(picker_buf, -1, 0, -1)
+                end
+                
+                -- Helper to highlight line
+                local function highlight_line(idx)
+                    clear_highlights()
+                    if idx >= 1 and idx <= #names then
+                        vim.api.nvim_buf_add_highlight(picker_buf, -1, "CursorLine", idx - 1, 0, -1)
                     end
-                    if choice == "[Delete all sessions]" then
-                        vim.ui.select({ "Yes", "No" }, {
-                            prompt = "Delete ALL sessions?",
-                        }, function(confirm)
-                            if confirm == "Yes" then
-                                for _, s in ipairs(sessions) do
-                                    delete_session(s.name)
-                                end
+                end
+                
+                -- Helper to refresh picker content
+                local function refresh_picker()
+                    sessions = get_all_sessions()
+                    names = {}
+                    for _, s in ipairs(sessions) do
+                        table.insert(names, s.name)
+                    end
+                    
+                    if #sessions > 1 then
+                        table.insert(names, "[Delete all sessions]")
+                    end
+                    
+                    -- Update buffer content
+                    vim.api.nvim_set_option_value("modifiable", true, { buf = picker_buf })
+                    vim.api.nvim_buf_set_lines(picker_buf, 0, -1, false, names)
+                    vim.api.nvim_set_option_value("modifiable", false, { buf = picker_buf })
+                    
+                    -- Adjust current_idx if it exceeds new list length
+                    if current_idx > #names then
+                        current_idx = math.max(1, #names)
+                    end
+                    
+                    -- Rehighlight
+                    highlight_line(current_idx)
+                    
+                    -- Show notification
+                    if #names == 0 then
+                        vim.notify("No sessions left", vim.log.levels.INFO)
+                    end
+                end
+                
+                -- Helper to delete current selection (no confirm)
+                local function delete_current()
+                    if current_idx >= 1 and current_idx <= #names then
+                        local choice = names[current_idx]
+                        if choice == "[Delete all sessions]" then
+                            for _, s in ipairs(sessions) do
+                                delete_session(s.name)
                             end
-                        end)
-                        return
-                    end
-                    vim.ui.select({ "Yes", "No" }, {
-                        prompt = "Delete '" .. choice .. "'?",
-                    }, function(confirm)
-                        if confirm == "Yes" then
+                            vim.notify("All sessions deleted", vim.log.levels.INFO)
+                            refresh_picker()
+                        else
                             delete_session(choice)
+                            refresh_picker()
                         end
-                    end)
-                end)
+                    end
+                end
+                
+                -- Keymaps
+                local opts = { buffer = picker_buf, noremap = true, silent = true }
+                
+                -- Navigate
+                vim.keymap.set("n", "j", function()
+                    current_idx = math.min(current_idx + 1, #names)
+                    highlight_line(current_idx)
+                end, opts)
+                
+                vim.keymap.set("n", "k", function()
+                    current_idx = math.max(current_idx - 1, 1)
+                    highlight_line(current_idx)
+                end, opts)
+                
+                -- Delete with Ctrl+X (no confirmation)
+                vim.keymap.set("n", "<C-x>", delete_current, opts)
+                
+                -- Select with Enter (show confirmation)
+                vim.keymap.set("n", "<CR>", function()
+                    if current_idx >= 1 and current_idx <= #names then
+                        local choice = names[current_idx]
+                        if choice == "[Delete all sessions]" then
+                            vim.ui.select({ "Yes", "No" }, {
+                                prompt = "Delete ALL sessions?",
+                            }, function(confirm)
+                                if confirm == "Yes" then
+                                    for _, s in ipairs(sessions) do
+                                        delete_session(s.name)
+                                    end
+                                    refresh_picker()
+                                end
+                            end)
+                        else
+                            vim.ui.select({ "Yes", "No" }, {
+                                prompt = "Delete '" .. choice .. "'?",
+                            }, function(confirm)
+                                if confirm == "Yes" then
+                                    delete_session(choice)
+                                    refresh_picker()
+                                end
+                            end)
+                        end
+                    end
+                end, opts)
+                
+                -- Close with Esc or q
+                vim.keymap.set("n", "<Esc>", function()
+                    vim.api.nvim_win_close(picker_win, true)
+                end, opts)
+                
+                vim.keymap.set("n", "q", function()
+                    vim.api.nvim_win_close(picker_win, true)
+                end, opts)
             end, { desc = "Delete session" })
 
             -- Exit handler
