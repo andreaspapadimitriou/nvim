@@ -4,7 +4,7 @@ return {
         -- add any options here
         cli = {
             mux = {
-                enabled = false, -- Disabled: uses Neovim's built-in terminal instead
+                enabled = true, -- Disabled: uses Neovim's built-in terminal instead
             },
         },
     },
@@ -24,7 +24,7 @@ return {
         {
             "<M-.>",
             function()
-                 require("sidekick.cli").toggle({ name = "copilot", focus = false })
+                require("sidekick.cli").toggle({ name = "copilot", focus = false })
             end,
             desc = "Sidekick Toggle",
             mode = { "n", "t", "i", "x" },
