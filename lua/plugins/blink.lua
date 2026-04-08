@@ -17,7 +17,7 @@ return {
                 },
                 menu = {
                     auto_show = function(_)
-                        return vim.fn.getcmdtype() == ":"
+                        local t = vim.fn.getcmdtype(); return t == ":" or t == "/" or t == "?"
                     end,
                 },
             },
