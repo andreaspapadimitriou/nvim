@@ -147,6 +147,13 @@ return {
     {
         "<leader>fr",
         function()
+            Snacks.picker.resume()
+        end,
+        desc = "Resume",
+    },
+    {
+        "<leader>fR",
+        function()
             Snacks.picker.recent()
         end,
         desc = "Recent",
@@ -218,5 +225,13 @@ return {
         end,
         mode = { "n", "x" },
         desc = "Visual selection or word",
+    },
+    {
+        "<leader>bd",
+        function()
+            Snacks.bufdelete()
+        end,
+        mode = "n",
+        { desc = "delete buffer" },
     },
 }
