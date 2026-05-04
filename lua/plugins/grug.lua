@@ -9,7 +9,7 @@ return {
             {
                 "<leader>rr",
                 function()
-                    require("grug-far").grug_far({})
+                    require("grug-far").open({})
                 end,
                 desc = "Search and replace",
                 mode = { "n", "v" },
@@ -17,7 +17,7 @@ return {
             {
                 "<leader>ra",
                 function()
-                    require("grug-far").grug_far({ engine = "astgrep" })
+                    require("grug-far").open({ engine = "astgrep" })
                 end,
                 desc = "Astgrep",
                 mode = { "n", "v" },
