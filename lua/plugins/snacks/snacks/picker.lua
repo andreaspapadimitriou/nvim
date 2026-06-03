@@ -14,22 +14,7 @@ return function(opts)
         },
         sources = {
             buffers = {
-                title = "Buffers (<ctrl-d> to close)",
-                win = {
-                    input = {
-                        keys = {
-                            ["<c-d>"] = { "bufdelete", mode = { "n", "i" } },
-                        },
-                    },
-                },
-                actions = {
-                    bufdelete = function(picker, item)
-                        if item then
-                            vim.api.nvim_buf_delete(item.buf, { force = false })
-                            picker:find()
-                        end
-                    end,
-                },
+                title = "Buffers (<C-x> or <dd> to close) <M-w to cycle>",
             },
             grep = {
                 title = "Grep (<ctrl-g> to Regex)",
