@@ -10,16 +10,15 @@ return {
     },
     keys = {
         {
-            -- default keybind was tab but conflicts with other bufferline
+            -- default keybind was tab but conflicts with bufferline's buffer cycling
             "<tab>",
             function()
                 -- if there is a next edit, jump to it, otherwise apply it if any
                 if not require("sidekick").nes_jump_or_apply() then
-                    return "<Tab>" -- fallback to normal tab
+                    vim.cmd("BufferLineCycleNext")
                 end
             end,
-            expr = true,
-            desc = "Goto/Apply Next Edit Suggestion",
+            desc = "Goto/Apply Next Edit Suggestion (fallback: next buffer)",
         },
         {
             "<M-.>",
