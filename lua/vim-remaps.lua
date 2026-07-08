@@ -131,3 +131,17 @@ vim.api.nvim_create_autocmd("RecordingEnter", {
 vim.api.nvim_create_autocmd("RecordingLeave", {
     callback = notify_macro_stop,
 })
+
+-- Yank buffer path keybinds (yd + letter)
+local function yank_path(modifier, label)
+    local path = vim.fn.expand(modifier)
+    vim.fn.setreg("+", path)
+    vim.notify("Yanked " .. label .. ":\n" .. path, vim.log.levels.INFO, { title = "Yank Path" })
+end
+
+vim.keymap.set("n", "<leader>ydf", function() yank_path("%:p", "full path") end,        { desc = "Yank buffer full absolute path" })
+vim.keymap.set("n", "<leader>ydr", function() yank_path("%",   "relative path") end,    { desc = "Yank buffer relative path" })
+vim.keymap.set("n", "<leader>ydt", function() yank_path("%:t", "filename") end,         { desc = "Yank buffer filename only" })
+vim.keymap.set("n", "<leader>ydh", function() yank_path("%:h", "directory") end,        { desc = "Yank buffer directory path" })
+vim.keymap.set("n", "<leader>yde", function() yank_path("%:e", "extension") end,        { desc = "Yank buffer file extension" })
+vim.keymap.set("n", "<leader>yds", function() yank_path("%:~", "path from ~") end,      { desc = "Yank buffer path relative to ~" })
