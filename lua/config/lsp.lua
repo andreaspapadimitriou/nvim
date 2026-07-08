@@ -59,7 +59,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
         -- Enable autoformat for this buffer by default
-        vim.b[bufnr].autoformat = true
+        -- jsonls formats generically and doesn't match the repo's schema-based
+        -- format_json.py pre-commit hook, so disable autoformat-on-save for json to avoid producing diffs.
+        vim.b[bufnr].autoformat = vim.bo[bufnr].filetype ~= "json"
 
         if client:supports_method("textDocument/complemetion") then
             vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
